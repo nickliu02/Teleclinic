@@ -13,37 +13,37 @@ let router = new Router({
     routes: [
       {
         path: "/", name:"Home", component: Home, meta:{
-          auth:false
+          auth:true
         }
       },
 
       {
         path: "/appointments", name:"Appointments", component: Calendar, meta:{
-          auth:false
+          auth:true
         }
       },
 
       {
         path: "/queue", name:"Queue", component: Queue, meta:{
-          auth:false
+          auth:true
         }
       },
 
       {
         path: "/personal_info", name:"Personal Info", component: Personal_Info, meta:{
-          auth:false
+          auth:true
         }
       },
 
       {
         path: "/login", name:"Login", component: Login, meta:{
-          auth:true
+          guest:true
         }
       },
 
       {
         path: "/register", name:"Register", component: Register, meta:{
-          auth:true
+          guest:true
         }
       },
 
@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
     else{
-      next({name: 'Play'})
+      next({name: 'Home'})
     }
   }
   else{

@@ -64,7 +64,7 @@
                                         type="text"
                                         
                                         v-model="form.health_card_number"
-                                        :rules="[rules.required]"
+                                        :rules="[rules.required, rules.healthCardRules]"
                                     >
                                     </v-text-field>
                                     <v-text-field
@@ -126,8 +126,8 @@ export default {
               min: val => val.length >= 8 || 'Min 8 characters',
               min2: val => val.length >= 3 || 'Min 3 characters',
               match: val => val === this.form.password || 'Password must match',
-              emailRules: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      
+              emailRules: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email must be valid',
+              healthCardRules: v => !v || /[1-9]\d{9}/.test(v) || 'Health card number must be valid',
 
               
             }

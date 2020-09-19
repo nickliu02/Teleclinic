@@ -14,9 +14,13 @@ appointmentRouter.get('/get',async (req,res)=>{
     const value = await isDoctor(req.userData);
     if (value.exists == true){
         //Do doctor
+        const infos = await getDoctor(req.userData);
+        res.send(infos);
     }
     else{
         //Do pateint
+        const infos = await getPatient(req.userData);
+        res.send(infos);
     }
 });
 

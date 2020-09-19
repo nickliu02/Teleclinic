@@ -85,14 +85,14 @@ const isDoctor = (email) => client.query(
     .catch(e => e);
 
 const getDoctor = (email) => client.query(
-    'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
+    'SELECT * FROM appointments WHERE doctor_email = $1 ORDER BY start,finish',
     [email]
 )
     .then(res => res.rows[0])
     .catch(e => e);
 
 const getPatient = (email) => client.query(
-    'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
+    'SELECT * FROM appointsments WHERE email = $1 ORDER BY start,finish',
     [email]
 )
     .then(res => res.rows[0])

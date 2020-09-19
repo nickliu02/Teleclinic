@@ -9,10 +9,16 @@ const app = express();
 const authRoutes = require('./api/routes/auth');
 const zoomRoutes = require('./api/routes/zoom')
 app.use(morgan('dev'));
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+
 //app.use(express.json());
-app.use(cors({origin: true}));
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+  }
+app.use(cors(corsOptions));
+
+app.use(express.json());
 
 //Initialize Routes
 

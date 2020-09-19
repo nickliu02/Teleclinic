@@ -12,7 +12,8 @@ export default new Vuetify({
                 secondary: "#FC4A1A",
                 accent: "#F7B733",
                 error: colors.red.accent3,
-                success: colors.blue.base
+                success: colors.blue.base,
+                background: "#eeeeee",
             }
         }
     },

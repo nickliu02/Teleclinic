@@ -20,7 +20,7 @@ authRouter.post('/login', async (req,res,next) => {
     const { email, password } = req.body;
     console.log(email,password);
 
-    const token = await login("santaclaus@gmail.com", "hohoho");
+    const token = await login(email,password);
 
     res.send({accessToken: token});
 });

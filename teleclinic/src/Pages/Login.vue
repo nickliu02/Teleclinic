@@ -17,15 +17,14 @@
                             </v-card-title>
 
                             <v-card-text>
-                                <v-form>
+                                <v-form ref="form">
                                     <v-text-field
                                         label="Login"
                                         name="login"
                                         prepend-icon="mdi-account"
                                         color="success"
                                         type="text"
-                                        maxlength="12"
-                                        v-model="form.username"
+                                        v-model="form.email"
                                     >
                                     </v-text-field>
 
@@ -37,7 +36,7 @@
                                         prepend-icon="mdi-lock"
                                         v-model="form.password"
                                         type="password"
-                                        maxlength="12"
+                              
                                     ></v-text-field>
 
                                     
@@ -65,7 +64,7 @@ export default {
     data(){
         return {
             form: {
-                username : "",
+                email : "",
                 password : ""
             },
             
@@ -77,10 +76,15 @@ export default {
             localStorage.setItem('jwt',"lol");
             e.preventDefault()
             this.$router.push('/');
+            let form = this.form;
 
-            //const form = this.form;
-            /*if (form.password.length>0 && form.username.length>0){
-                this.$axios.post(this.$API_URL+"/auth/login", {
+            if (form.email == "santaclaus@gmail.com") {
+                window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2F134.209.168.108%3A3000%2Fzoom%2Fcreate%2F");
+
+            }
+
+            /*if (this.$refs.form.validate()) {
+                 this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
                 .then(response => {
@@ -93,14 +97,11 @@ export default {
                             this.$router.push(localStorage.getItem('nextUrl'))
                         }
                         else{
-                            this.$router.push('Play')
+                            this.$router.push('Appointments')
                         }
                     }
-                    
-                    
                 
                 })
-
             }*/
             
 

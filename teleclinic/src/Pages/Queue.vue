@@ -81,8 +81,8 @@ export default {
   },
 
   data: () => ({
-      hasAppointment: false,
-      isInQueue: true,
+      hasAppointment: true,
+      isInQueue: false,
       name: "Nicky",
       appointmentTime: "7:00pm",
       link: "https://www.google.com",

@@ -1,7 +1,8 @@
 const express = require('express');
 const zoomRouter = express.Router();
 const querystring = require('querystring');
-const {CLIENT_ID,CLIENT_SECRET} = require("../../config");
+const {CLIENT_ID} = require("../../config");
+const {CLIENT_SECRET} = require("../../config");
 var request = require("request");
 
 zoomRouter.get('/create',async (req,res)=>{

@@ -27,13 +27,14 @@ zoomRouter.get('/create',async (req,res)=>{
 
     };
     request(authOptions, function(error, response, body) {
-        console.log(body.access_token);
+        console.log(body);
+        console.log(body['access_token']);
 
         const meetOptions = {
             method:"POST",
             url:"https://api.zoom.us/v2/users/me/meetings",
             headers: {
-                Authorization: body.access_token,
+                Authorization: body['access_token'],
                 "content-type": "application/json"
             },
             json:{

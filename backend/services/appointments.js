@@ -81,7 +81,7 @@ const isDoctor = (email) => client.query(
     'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
     [email]
 )
-    .then(res => res.rows[0])
+    .then(res => res.rows[0].exists)
     .catch(e => e);
 
 const getDoctor = (email) => client.query(

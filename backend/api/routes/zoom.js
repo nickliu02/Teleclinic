@@ -33,8 +33,7 @@ zoomRouter.get('/create',async (req,res)=>{
             method:"POST",
             url:"https://api.zoom.us/v2/users/me/meetings",
             headers: {
-                Authorization: token,
-                "content-type": "application/json"
+                Authorization: "Bearer "+token
             },
             json:{
                 "topic": "appointment",

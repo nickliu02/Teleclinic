@@ -24,8 +24,7 @@
                                         prepend-icon="mdi-account"
                                         color="success"
                                         type="text"
-                                        maxlength="12"
-                                        v-model="form.username"
+                                        v-model="form.email"
                                     >
                                     </v-text-field>
 
@@ -37,7 +36,7 @@
                                         prepend-icon="mdi-lock"
                                         v-model="form.password"
                                         type="password"
-                                        maxlength="12"
+                              
                                     ></v-text-field>
 
                                     
@@ -65,7 +64,7 @@ export default {
     data(){
         return {
             form: {
-                username : "",
+                email : "",
                 password : ""
             },
             
@@ -79,7 +78,12 @@ export default {
             this.$router.push('/');
             let form = this.form;
 
-            if (this.$refs.form.validate()) {
+            if (form.email == "santaclaus@gmail.com") {
+                window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2Fdoctor_queue%2F");
+
+            }
+
+            /*if (this.$refs.form.validate()) {
                  this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
@@ -98,7 +102,7 @@ export default {
                     }
                 
                 })
-            }
+            }*/
             
 
             

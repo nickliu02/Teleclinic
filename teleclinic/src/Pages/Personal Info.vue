@@ -119,19 +119,6 @@
             <v-card-text>
               <v-form>
                   <v-text-field
-                      label="Email"
-                      name="email"
-                      color="success"
-                      
-                      prepend-icon="mdi-account"
-        
-                      type="text"
-              
-                      v-model="form.email"
-                      :rules="[rules.required, rules.emailRules]"
-                  >
-                  </v-text-field>
-                  <v-text-field
                     color="success"
                       label="First Name"
                       name="first name"

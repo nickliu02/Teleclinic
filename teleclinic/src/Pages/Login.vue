@@ -78,7 +78,9 @@ export default {
             this.$router.push('/');
             let form = this.form;
 
-            if (this.$refs.form.validate()) {
+           
+
+            /*if (this.$refs.form.validate()) {
                  this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
@@ -97,7 +99,7 @@ export default {
                     }
                 
                 })
-            }
+            }*/
             
 
             

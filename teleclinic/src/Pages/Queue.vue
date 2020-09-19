@@ -43,6 +43,7 @@
         </v-card>
           
         <v-card
+        v-if="isInQueue"
           width="600"
           class="mx-auto my-auto"
         >
@@ -80,7 +81,7 @@ export default {
   },
 
   data: () => ({
-      hasAppointment: false,
+      hasAppointment: true,
       isInQueue: false,
       name: "Nicky",
       appointmentTime: "7:00pm",

@@ -77,6 +77,18 @@ function send_email(from,to){
     });
 }
 
+
+
+const isDoctor = (email) => client.query(
+    'SELECT EXISTS(SELECT email from doctors) where email = $1',
+    [email]
+)
+    .then(res => res.rows[0])
+    .catch(e => e);
+
+
+
 module.exports = {
-    createMeeting:createMeeting
+    createMeeting:createMeeting,
+    isDoctor:isDoctor
 }

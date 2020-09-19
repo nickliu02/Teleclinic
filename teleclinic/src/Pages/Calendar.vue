@@ -55,7 +55,18 @@
             <v-form @submit.prevent="addAppointment">
                 <h1 style ="text-align:center;">Make Appointment</h1>
                 <v-text-field v-model="details" type="text" label="Reason for Appointment (required)"></v-text-field>
-                <v-text-field v-model="start" type="text" label="Start Time (required)"></v-text-field>
+
+                <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="date" label="Date: (required)" readonly v-bind="attrs" v-on="on"></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="menu = false;">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(checkDate(date))">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+
                 <v-text-field v-model="end" type="text" label="End Time (required)"></v-text-field>
                 <div style = "text-align:center;">
                   <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
@@ -136,6 +147,11 @@
         day: 'Day',
         '4day': '4 Days',
       },
+      date: new Date().toISOString().substr(0, 10),
+      today: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
@@ -146,13 +162,52 @@
       end:null,
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      times: ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM', '3:00 PM', '3:30 PM','4:00 PM','4:30 PM','5:00 PM'],
       dialog: false,
       dialogDate: false
     }),
     mounted () {
       this.$refs.calendar.checkChange()
     },
+
     methods: {
+
+      toTimestamp(date,time,m){
+        var dL = date.split("-")
+        var tL = time.split(":")
+        if(m=="PM"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
+        var timeS = new Date(Date.UTC(dL[0],dL[1],dL[2],tL[0],tL[1]))
+        console.log(timeS.getTime())
+        return timeS.getTime()
+      },
+      toToDfromTimestamp(ts){
+        var d = new Date(ts)
+        var dL = d.toTimeString().split(":")
+        var hr = parseInt(dL[0],10)
+        var curPeriod = "AM"
+        if(hr<=23 && hr>=12){
+          curPeriod = "PM"
+        }
+        if(hr>12){
+          hr-=12
+        }
+        var h = hr.toString()
+        return h+":"+dL[1]+" "+curPeriod
+      },
+      toDatefromTimestamp(ts){
+        var d = new Date(ts)
+        var dat = ""+d.getDate()
+        var mon = ""+(d.getMonth()+1)
+        if (dat.length==1){
+          dat = "0"+dat
+        }
+        if(mon.length==1){
+          mon="0"+mon
+        }
+        console.log(dat+'/'+(mon)+"/"+d.getFullYear())
+        return dat+'/'+mon+"/"+d.getFullYear()
+      },
+
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
@@ -185,6 +240,19 @@
 
         nativeEvent.stopPropagation()
       },
+      checkDate(dd){
+        if(this.today<dd){
+          this.date = dd
+
+          return dd
+        }
+        else{
+          this.date = this.today
+          console.log(this.date)
+
+          return this.today
+        }
+      },
       updateRange () {
         let events = []
 
@@ -205,6 +273,18 @@
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
       },
-    },
+      formatDate (date) {
+        if (!date) return null
+
+        const [year, month, day] = date.split('-')
+        return `${month}/${day}/${year}`
+      },
+      parseDate (date) {
+        if (!date) return null
+
+        const [month, day, year] = date.split('/')
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      },
+    }
   }
 </script>

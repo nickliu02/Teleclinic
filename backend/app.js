@@ -12,14 +12,14 @@ app.use(morgan('dev'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 //app.use(express.json());
-app.use(cors());
+
 
 //Initialize Routes
 
 app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);
 
-
+app.use(cors());
 
 //Errors
 

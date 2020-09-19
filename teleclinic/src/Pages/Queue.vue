@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="{background: '#eee'}">
         <v-card 
           v-if="hasAppointment"
           width="600"

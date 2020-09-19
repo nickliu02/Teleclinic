@@ -1,5 +1,6 @@
 const { Client } = require('pg');
 const { connectionString } = require( '../config');
+console.log(connectionString);
 const client = new Client({
     connectionString
 });
@@ -7,3 +8,5 @@ const client = new Client({
 client.connect()
     .then(() => console.log('connected to db'))
     .catch(e => console.log(e));
+
+module.exports.client  = client;

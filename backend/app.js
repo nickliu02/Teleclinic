@@ -9,8 +9,9 @@ const app = express();
 const authRoutes = require('./api/routes/auth');
 const zoomRoutes = require('./api/routes/zoom')
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+//app.use(express.json());
 app.use(cors());
 
 //Initialize Routes
@@ -21,11 +22,7 @@ app.use('/zoom',zoomRoutes);
 
 
 //Errors
-app.use((req, res, next) => {
-    const error = new Error('Not found');
-    error.status = 404;
-    next(error);
-})
+
 
 app.use((error, req, res, next) => {
     res.status(error.status || 500);

@@ -38,7 +38,7 @@ zoomRouter.get('/create',async (req,res)=>{
             },
             json:{
                 topic: "appointment",
-                start_time: "2020-09-19T10:50:00Z",
+                start_time: "2020-09-19T12:28:00Z",
                 duration: 30,
                 timezone: "UTC",
                 password: "nithin",
@@ -46,7 +46,7 @@ zoomRouter.get('/create',async (req,res)=>{
                 settings: {
                     host_video: true,
                     participant_video: true,
-                    join_before_host: true,
+                    join_before_host: false,
                     mute_upon_entry: true,
                     enforce_login: true,
                     registrants_email_notification: true
@@ -56,7 +56,6 @@ zoomRouter.get('/create',async (req,res)=>{
         };
         request(meetOptions,function(error,response,body){
             console.log(body);
-            console.log(error);
 
         });
     });

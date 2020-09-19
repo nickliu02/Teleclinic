@@ -36,6 +36,18 @@
                     </v-list-item-content>
                 </v-list-item>
 
+
+                <v-list-item 
+                    @click="logOut()"
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ mdiLogoutVariant }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>Logout</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
 
         </v-navigation-drawer>
@@ -46,7 +58,8 @@
 </template>
 
 <script>
-import { mdiCalendarMonthOutline, mdiCalendarArrowRight, mdiHumanQueue  } from '@mdi/js';
+import { mdiCalendarMonthOutline,  mdiHumanQueue,
+mdiLogoutVariant, mdiBookInformationVariant  } from '@mdi/js';
 
 export default {
   name: 'Navbar',
@@ -58,9 +71,11 @@ export default {
   data: () => ({
     items: [
       { title: "Appointments", icon: mdiCalendarMonthOutline, route: "/appointments" },
-      { title: "Schedule", icon: mdiCalendarArrowRight, route: "/schedule" },
-      { title: "Queue", icon: mdiHumanQueue , route: "/queue" },
+      { title: "Queue", icon: mdiHumanQueue, route: "/queue" },
+      { title: "Personal Info", icon: mdiBookInformationVariant, route: "/personal_info" },
     ],
+
+    mdiLogoutVariant: mdiLogoutVariant,
     
   }),
 

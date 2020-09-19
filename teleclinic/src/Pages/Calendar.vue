@@ -170,8 +170,8 @@
 
           events.push({
             name: "Hello World",
-            start: 1600490130,
-            end: 1600493730,
+            start: Date.now(),
+            end: Date.now() + 1000,
             color: this.colors[this.rnd(0, this.colors.length - 1)],
             timed: true,
           })

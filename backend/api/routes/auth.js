@@ -1,7 +1,9 @@
-import express from 'express';
-import { register, login } from '../services/auth';
+const express = require('express');
+const register = require('../../services/auth').register;
+const login = require('../../services/auth').login;
 
-export const authRouter = express.Router();
+
+const authRouter = express.Router();
 
 authRouter.post('/register',async (req,res)=>{
     const {email, first_name, last_name, password, phone_number,health_card_number} = req.body;
@@ -19,3 +21,5 @@ authRouter.post('/login', async (req,res) => {
 
     res.send({accessToken: token});
 });
+
+module.exports = authRouter;

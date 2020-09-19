@@ -274,6 +274,23 @@ export default {
       };
       this.form = this.modalInfo;
     },
-  }
+  },
+
+  onUpdate(e){
+            e.preventDefault()
+            console.log("update info")
+            const form = this.form;
+            if (this.$refs.form.validate()) {
+                this.$axios.post(this.$API_URL+"/auth/update_info", {
+                        ...form
+                    })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(e => console.log(e))
+
+            }
+             
+        }
 };
 </script>

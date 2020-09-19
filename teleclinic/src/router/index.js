@@ -6,6 +6,7 @@ import Queue from "../Pages/Queue.vue";
 import Personal_Info from "../Pages/Personal Info.vue";
 import Login from "../Pages/Login.vue";
 import Register from "../Pages/Register.vue";
+import DoctorQueue from "../Pages/DoctorQueue.vue";
 
 Vue.use(Router);
 
@@ -44,6 +45,12 @@ let router = new Router({
       {
         path: "/register", name:"Register", component: Register, meta:{
           guest:true
+        }
+      },
+
+      {
+        path: "/doctor_queue", name:"DoctorQueue", component: DoctorQueue, meta:{
+          doctor:true
         }
       },
 

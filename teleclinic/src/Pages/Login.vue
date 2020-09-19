@@ -17,7 +17,7 @@
                             </v-card-title>
 
                             <v-card-text>
-                                <v-form>
+                                <v-form ref="form">
                                     <v-text-field
                                         label="Login"
                                         name="login"
@@ -77,10 +77,10 @@ export default {
             localStorage.setItem('jwt',"lol");
             e.preventDefault()
             this.$router.push('/');
+            let form = this.form;
 
-            //const form = this.form;
-            /*if (form.password.length>0 && form.username.length>0){
-                this.$axios.post(this.$API_URL+"/auth/login", {
+            if (this.$refs.form.validate()) {
+                 this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
                 .then(response => {
@@ -93,15 +93,12 @@ export default {
                             this.$router.push(localStorage.getItem('nextUrl'))
                         }
                         else{
-                            this.$router.push('Play')
+                            this.$router.push('Appointments')
                         }
                     }
-                    
-                    
                 
                 })
-
-            }*/
+            }
             
 
             

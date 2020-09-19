@@ -12,7 +12,13 @@ const zoomRoutes = require('./api/routes/zoom')
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
-app.use(cors());
+var corsOptions = {
+    origin: '*',
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 //Initialize routes
 app.use('/auth',authRoutes);

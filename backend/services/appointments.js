@@ -87,5 +87,7 @@ const isDoctor = (email) => client.query(
 
 module.exports = {
     createMeeting:createMeeting,
-    isDoctor:isDoctor
+    isDoctor:isDoctor,
+    getDoctor:getDoctor,
+    getPatient:getPatient
 }

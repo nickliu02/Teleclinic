@@ -20,7 +20,7 @@ export default {
 
         if (code) {
           console.log("sending code")
-          this.$axios.post(this.$API_URL+"/zoom/create", {
+          this.$axios.post(this.$API_URL+"/zoom/create", {header: {'x-access-token': localStorage.getItem('token')}},{
           code: code,
           email: "santaclaus@gmail.com"
           }) 

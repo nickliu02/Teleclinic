@@ -4,7 +4,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const app = express();
-app.options('*', cors())
 
 //Routes
 const authRoutes = require('./api/routes/auth');
@@ -13,12 +12,13 @@ app.use(morgan('dev'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 //app.use(express.json());
-
+app.use(cors({origin: true}));
 
 //Initialize Routes
 
 app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);
+
 
 
 //Errors

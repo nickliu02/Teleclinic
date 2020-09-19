@@ -16,4 +16,4 @@ appointmentRouter.get('/get',async (req,res)=>{
     res.status(200);
 });
 
-module.exports=scheduleRouter;
+module.exports=appointmentRouter;

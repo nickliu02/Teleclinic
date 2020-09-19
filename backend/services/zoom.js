@@ -1,5 +1,5 @@
-const {CLIENT_ID} = require("../../config");
-const {CLIENT_SECRET} = require("../../config");
+const {CLIENT_ID} = require("../config");
+const {CLIENT_SECRET} = require("../config");
 const client = require('./database').client;
 function assignCode(code,email) {
     var authOptions = {

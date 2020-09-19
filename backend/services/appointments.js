@@ -1,5 +1,6 @@
 const client = require('./database').client;
 const {retrieve_zoom_auth} = require('./auth');
+const request = require('request');
 const nodemailer = require('nodemailer');
 function make_password(length) {
     var result = '';
@@ -47,7 +48,7 @@ function createMeeting(body,start_time,doctor_email,email){
         )
         //send_email(,email)
 
-        
+
     });
 }
 function send_email(from,to){

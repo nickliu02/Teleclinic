@@ -27,6 +27,7 @@ zoomRouter.get('/create',async (req,res)=>{
 
     };
     request(authOptions, function(error, response, body) {
+        console.log(body);
         console.log(body['access_token']);
 
         const meetOptions = {

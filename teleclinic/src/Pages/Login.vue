@@ -74,9 +74,12 @@ export default {
     },
     methods : {
         onLogin(e){
+            localStorage.setItem('jwt',"lol");
             e.preventDefault()
-            const form = this.form;
-            if (form.password.length>0 && form.username.length>0){
+            this.$router.push('/');
+
+            //const form = this.form;
+            /*if (form.password.length>0 && form.username.length>0){
                 this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
@@ -98,7 +101,7 @@ export default {
                 
                 })
 
-            }
+            }*/
             
 
             

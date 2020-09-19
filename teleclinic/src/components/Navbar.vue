@@ -80,7 +80,10 @@ export default {
   }),
 
   methods: {
-      
+      logOut() {
+          localStorage.removeItem('jwt');
+          this.$router.push('Login');
+      }
   }
 };
 </script>

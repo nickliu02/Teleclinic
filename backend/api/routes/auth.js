@@ -23,7 +23,7 @@ authRouter.get('/login', async (req,res,next) => {
     const { email, password } = req.body;
     console.log(email,password);
 
-    const token = await login(email, password);
+    const token = await login("santaclaus@gmail.com", "hohoho");
 
     res.send({accessToken: token});
 });

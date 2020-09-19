@@ -4,7 +4,9 @@ const client = require('./database').client;
 const request = require("request");
 
 function assignCode(code,email) {
+    console.log(code);
     var authOptions = {
+
         method: 'POST',
         url: 'https://zoom.us/oauth/token',
         qs: {
@@ -22,6 +24,7 @@ function assignCode(code,email) {
     request(authOptions,function(error,response,body){
 
         let token = JSON.parse(body).access_token;
+        console.log(token);
         client.query(
             'UPDATE doctors SET zoomauth = $1 WHERE email = $2',
             [token,email]

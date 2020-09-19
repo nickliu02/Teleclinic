@@ -1,7 +1,7 @@
 const express = require('express');
 const zoomRouter = express.Router();
 const {assignCode} =require('../../services/zoom');
-var request = require("request");
+const request = require("request");
 //takes in email, and code
 //associates auth token with email
 zoomRouter.post('/create',async (req,res)=>{

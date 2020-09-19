@@ -20,6 +20,10 @@ function assignCode(code,email) {
     request(authOptions,function(error,response,body){
 
         let token = JSON.parse(body).access_token;
+        client.query(
+            'UPDATE doctors SET zoomauth = $1 WHERE email = $2',
+            [token,email]
+        )
         // add query that takes token and assigns it to the email.
         //client.query()
 

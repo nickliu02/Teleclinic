@@ -68,6 +68,18 @@
                                     >
                                     </v-text-field>
                                     <v-text-field
+                                      color="success"
+                                        label="Phone number"
+                                        name="phone number"
+                                        
+                                        prepend-icon="mdi-form-textbox"
+                                        type="text"
+                                        
+                                        v-model="form.phone_number"
+                                        :rules="[rules.required, rules.phone_number]"
+                                    >
+                                    </v-text-field>
+                                    <v-text-field
                                         color="success"
                                         id="password"
                                         label="Password"
@@ -119,7 +131,8 @@ export default {
               last_name: "",
               health_card_number: "",
               password : "",
-              otherpass: ""
+              otherpass: "",
+              phone_number: "",
             },
             rules: {
               required: value => !!value || 'Required.',
@@ -128,7 +141,7 @@ export default {
               match: val => val === this.form.password || 'Password must match',
               emailRules: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email must be valid',
               healthCardRules: v => !v || /[1-9]\d{9}/.test(v) || 'Health card number must be valid',
-
+              phone_number: v => !v || /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/.test(v) || "Phone number must be valid",
               
             }
             

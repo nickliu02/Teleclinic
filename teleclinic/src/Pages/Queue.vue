@@ -43,6 +43,7 @@
         </v-card>
           
         <v-card
+        v-if="isInQueue"
           width="600"
           class="mx-auto my-auto"
         >
@@ -53,6 +54,19 @@
             </v-card-title>
 
             <v-divider></v-divider>
+
+            <div style="padding: 20px">
+              <h3 align="center">Your place in line is: {{place}}</h3>
+              <h3 align="center">Estimated wait time: {{waitTimeToString(waitTime)}}</h3>
+
+              <div align="center" style="margin: 10px">
+                <v-btn class="mx-auto" color="error"> 
+                  Leave queue
+                </v-btn>
+
+              </div>
+              
+            </div>
 
         </v-card>
     </v-app>
@@ -67,16 +81,25 @@ export default {
   },
 
   data: () => ({
-      hasAppointment: false,
+      hasAppointment: true,
       isInQueue: false,
       name: "Nicky",
       appointmentTime: "7:00pm",
       link: "https://www.google.com",
+      place: 10,
+      waitTime: 3200
 
   }),
 
   methods: {
-
+    waitTimeToString(seconds) {
+      if (seconds < 3600) {
+        return Math.ceil(seconds / 60) + " minutes";
+      }
+      else {
+        return Math.ceil(seconds / 3600) + " hours";
+      }
+    }
   }
 };
 </script>

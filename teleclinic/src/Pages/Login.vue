@@ -73,7 +73,6 @@ export default {
     },
     methods : {
         onLogin(e){
-            localStorage.setItem('jwt',"lol");
             e.preventDefault()
             this.$router.push('/');
             let form = this.form;
@@ -83,7 +82,7 @@ export default {
 
             }
 
-            /*if (this.$refs.form.validate()) {
+            if (this.$refs.form.validate()) {
                  this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
                     })
@@ -91,18 +90,13 @@ export default {
                     console.log(response.data.accessToken )
                     if (typeof response.data.accessToken === 'string'){
                         localStorage.setItem('jwt',response.data.accessToken);
-                        localStorage.setItem('username', form.username) 
-
-                        if(localStorage.getItem('nextUrl') != null){
-                            this.$router.push(localStorage.getItem('nextUrl'))
-                        }
-                        else{
-                            this.$router.push('Appointments')
-                        }
+                        localStorage.setItem('email', form.email) 
+                        this.$router.push('Appointments')
+                        
                     }
                 
                 })
-            }*/
+            }
             
 
             

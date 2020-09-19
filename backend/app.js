@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const app = express();
+app.use(cors());
 
 //Routes
 const authRoutes = require('./api/routes/auth');
@@ -19,7 +20,6 @@ app.use(bodyParser.json());
 app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);
 
-app.use(cors());
 
 //Errors
 

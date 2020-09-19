@@ -9,7 +9,7 @@ function make_password(length) {
     }
     return result;
 }
-function createMeeting(body,start_time,doctor_email){
+function createMeeting(body,start_time,doctor_email,email){
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
     const meetOptions = {
@@ -42,8 +42,8 @@ function createMeeting(body,start_time,doctor_email){
 
         // data.start_url
         client.query(
-            'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-            [body.start,body.finish,body.timed,body.color,body.doctor_email,body.details,body.name,body.start_url,body.join_url,pwd]
+            'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+            [body.start,body.finish,body.timed,body.color,body.doctor_email,body.details,body.name,body.start_url,body.join_url,pwd,email]
         )
         //send_email()
 

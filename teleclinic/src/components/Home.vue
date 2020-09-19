@@ -15,18 +15,24 @@ export default {
   },
 
   mounted() {
-       
         let code = this.$route.query.code;
+        console.log(this.$route.query.code)
+
         if (code) {
-            this.$axios.post(this.$API_URL+"/create", {
-            code: code,
-            email: "santaclaus@gmail.com"
-            })           
-            .catch(e => {
-                console.log(e);
-            })
+          console.log("sending code")
+          this.$axios.post(this.$API_URL+"/zoom/create", {
+          code: code,
+          email: "santaclaus@gmail.com"
+          }) 
+          .then(r => {
+            console.log(r);
+            this.$router.push('doctor_queue');
+          })          
+          .catch(e => {
+              console.log(e);
+          })
         }
-        this.$router.push('doctor_queue');
+        
         
         
     }

@@ -1,5 +1,5 @@
-import { Client } from 'pg';
-import { connectionString } from '../config';
+const { Client } = require('pg');
+const { connectionString } = require( '../config');
 const client = new Client({
     connectionString
 });

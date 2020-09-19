@@ -54,20 +54,20 @@
           <v-container>
             <v-form @submit.prevent="addAppointment">
                 <h1 style ="text-align:center;">Make Appointment</h1>
-                <v-text-field v-model="details" type="text" label="Reason for Appointment (required)"></v-text-field>
+                <v-text-field v-model="details" :rules=[rules.required]  type="text" label="Reason for Appointment (required)"></v-text-field>
 
                 <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="date" label="Date: (required)" readonly v-bind="attrs" v-on="on"></v-text-field>
+                    <v-text-field v-model="date" :rules=[rules.required] label="Date: (required)" readonly v-bind="attrs" v-on="on"></v-text-field>
                   </template>
-                  <v-date-picker v-model="date" no-title scrollable>
+                  <v-date-picker v-model="date"  no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menu = false;">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menu.save(checkDate(date))">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
 
-                <v-select :items="availableT" label="Select Available Time (required)" @click="updateAvailableTimes(date)" dense solo></v-select>
+                <v-select :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="updateAvailableTimes(date)" dense solo></v-select>
                 <div style = "text-align:center;">
                   <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
                 </div>
@@ -146,6 +146,9 @@
         week: 'Week',
         day: 'Day',
         '4day': '4 Days',
+      },
+      rules: {
+        required: value => !!value || 'Required.'
       },
       date: new Date().toISOString().substr(0, 10),
       today: new Date().toISOString().substr(0, 10),

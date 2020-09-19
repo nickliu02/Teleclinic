@@ -3,6 +3,7 @@ const register = require('../../services/auth').register;
 const login = require('../../services/auth').login;
 const isDoctor = require('../../services/appointments').isDoctor;
 
+
 const authRouter = express.Router();
 
 authRouter.post('/register',async (req,res,next)=>{

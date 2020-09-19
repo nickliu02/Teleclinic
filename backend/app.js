@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const app = express();
 
 //Routes
-
+const authRoutes = require('./api/routes/auth');
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
@@ -15,7 +15,7 @@ app.use(cors());
 
 //Initialize Routes
 
-
+app.use('/auth',authRoutes);
 
 
 

@@ -4,7 +4,7 @@ const CLIENT_SECRET="VxR8rfs3dniuhVU7E7nVpX5InVsNTi2n";
 
 const KEY = 'anishispoo';
 
-const connectionString = "postgres://postgres:postgres@localhost:5432/teleclinic";
+const connectionString = "postgres://fairnightzz:badminton@1@localhost:5432/teleclinic";
 //export const API_URL = 'http://localhost:3000'; 
 
 module.exports.CLIENT_ID = this.CLIENT_ID;

@@ -27,7 +27,7 @@
                           
                                         type="text"
                                 
-                                        v-model="form.username"
+                                        v-model="form.email"
                                         :rules="[rules.required, rules.emailRules]"
                                     >
                                     </v-text-field>
@@ -157,14 +157,14 @@ export default {
                 .then(response => {
                     console.log(response.data.accessToken)
                     if (typeof response.data.accessToken === 'string'){
-                    localStorage.setItem('jwt',response.data.accessToken)
-                    
-                    localStorage.setItem('email', form.email) 
-                    if (localStorage.getItem('jwt') !== null){
+                        localStorage.setItem('jwt',response.data.accessToken)
                         
-                        this.$router.push('Home')
-                    
-                    }
+                        localStorage.setItem('email', form.email) 
+                        if (localStorage.getItem('jwt') !== null){
+                            
+                            this.$router.push('Home')
+                        
+                        }
                     }
                 })
                 .catch(e => console.log(e))

@@ -7,6 +7,7 @@ var request = require("request");
 zoomRouter.get('/create',async (req,res)=>{
     let code= req.query.code;
     console.log(code);
+    console.log(CLIENT_ID + ':' + CLIENT_SECRET);
     var options = {
         method: 'POST',
         url: 'https://zoom.us/oauth/token',

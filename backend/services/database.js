@@ -9,4 +9,5 @@ client.connect()
     .then(() => console.log('connected to db'))
     .catch(e => console.log(e));
 
+
 module.exports.client  = client;

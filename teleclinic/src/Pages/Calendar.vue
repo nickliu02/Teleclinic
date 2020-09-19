@@ -52,22 +52,22 @@
       <v-dialog v-model="dialog" max-width="500">
         <v-card>
           <v-container>
-            <v-form @submit.prevent="addAppointment">
+            <v-form ref="form" @submit.prevent="addAppointment">
                 <h1 style ="text-align:center;">Make Appointment</h1>
-                <v-text-field v-model="details" :rules=[rules.required]  type="text" label="Reason for Appointment (required)"></v-text-field>
+                <v-text-field v-model="form.reason" :rules=[rules.required]  type="text" label="Reason for Appointment (required)"></v-text-field>
 
-                <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
+                <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="date" :rules=[rules.required] label="Date: (required)" readonly v-bind="attrs" v-on="on"></v-text-field>
+                    <v-text-field v-model="form.date" :rules=[rules.required] label="Date: (required) - Please enter a present/future date" readonly v-bind="attrs" v-on="on"></v-text-field>
                   </template>
-                  <v-date-picker v-model="date"  no-title scrollable>
+                  <v-date-picker v-model="form.date"  no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menu = false;">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(checkDate(date))">OK</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(checkDate(form.date))">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
 
-                <v-select :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="updateAvailableTimes(date)" dense solo></v-select>
+                <v-select v-model="form.timeSelected" :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="updateAvailableTimes(form.date)" dense solo></v-select>
                 <div style = "text-align:center;">
                   <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
                 </div>
@@ -88,7 +88,6 @@
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
-          @change="updateRange"
         ></v-calendar>
         <v-menu
           v-model="selectedOpen"
@@ -105,17 +104,11 @@
               :color="selectedEvent.color"
               dark
             >
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
+              <v-btn icon @click="deleteEvent(selectedEvent.id)">
+                <v-icon>mdi-delete</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
             </v-toolbar>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
@@ -126,7 +119,7 @@
                 color="secondary"
                 @click="selectedOpen = false"
               >
-                Cancel
+                Close
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -148,9 +141,14 @@
         '4day': '4 Days',
       },
       rules: {
-        required: value => !!value || 'Required.'
+        required: value => !!value || 'Required',
+
       },
-      date: new Date().toISOString().substr(0, 10),
+      form: {
+        date: new Date().toISOString().substr(0, 10),
+        reason: null,
+        timeSelected: null
+      },
       today: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -160,7 +158,6 @@
       selectedOpen: false,
       events: [],
       name:null,
-      details:null,
       start:null,
       end:null,
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
@@ -175,9 +172,20 @@
     mounted () {
       this.$refs.calendar.checkChange()
       this.meetingST = [this.toTimestamp("2020-09-19","9:00 AM")]
+      this.getAppointments()
     },
 
     methods: {
+      getAppointments(){//individual appointments onlylet snapshot =
+        // let snapshot = awuait db.collection('calEvent').get()
+        let event = {}
+        event = {id: "name",start: 1600534864379,end:1600535864379,details:"Corona Virus", name: "Doctor's Appointment", timed: true, color:"primary"}
+        let e = [];
+        e.push(event)
+        this.events = e
+        console.log(this.events.length)
+
+      },
 
       toTimestamp(date,timem){
         let timemL = timem.split(" ")
@@ -188,7 +196,6 @@
         if(m=="PM"&& time!="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
         if(m=="AM"&&time=="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString() }
         let timeS = new Date(Date.UTC(dL[0],dL[1],dL[2],tL[0],tL[1]))
-        console.log(timeS.getTime())
         return timeS.getTime().toString()
       },
       toToDfromTimestamp(ts){
@@ -215,7 +222,6 @@
         if(mon.length==1){
           mon="0"+mon
         }
-        console.log(dat+'/'+(mon)+"/"+d.getFullYear())
         return dat+'/'+mon+"/"+d.getFullYear()
       },
 
@@ -253,14 +259,11 @@
       },
       checkDate(dd){
         if(this.today<dd){
-          this.date = dd
-
+          this.form.date = dd
           return dd
         }
         else{
-          this.date = this.today
-          console.log(this.date)
-
+          this.form.date = this.today
           return this.today
         }
       },
@@ -274,23 +277,7 @@
         this.availableT=aMeetings
 
       },
-      updateRange () {
-        let events = []
 
-
-        for (let i = 0; i < 1; i++) {
-
-          events.push({
-            name: "Hello World",
-            start: Date.now(),
-            end: Date.now() + 1000*60*60*3,
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            timed: true,
-          })
-        }
-
-        this.events = events
-      },
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
       },

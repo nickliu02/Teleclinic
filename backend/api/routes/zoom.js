@@ -27,29 +27,29 @@ zoomRouter.get('/create',async (req,res)=>{
 
     };
     request(authOptions, function(error, response, body) {
-        let token = JSON.parse(body).access_token
+        let token = JSON.parse(body).access_token;
         console.log(token);
         const meetOptions = {
             method:"POST",
             url:"https://api.zoom.us/v2/users/me/meetings",
             headers: {
-                Authorization: "Bearer "+token
+                Authorization: "Bearer "+token,
+                "Content-Type":"application/json"
             },
             json:{
-                "topic": "appointment",
-                "start_time": "2020-09-19T10:50:00Z",
-                "duration": "30",
-                // "schedule_for": "string",
-                "timezone": "UTC",
-                "password": "nithin",
-                "agenda": "Checkup",
-                "settings": {
-                    "host_video": "true",
-                    "participant_video": "true",
-                    "join_before_host": "true",
-                    "mute_upon_entry": "true",
-                    "enforce_login": "true",
-                    "registrants_email_notification": "boolean"
+                topic: "appointment",
+                start_time: "2020-09-19T10:50:00Z",
+                duration: 30,
+                timezone: "UTC",
+                password: "nithin",
+                agenda: "Checkup",
+                settings: {
+                    host_video: true,
+                    participant_video: true,
+                    join_before_host: true,
+                    mute_upon_entry: true,
+                    enforce_login: true,
+                    registrants_email_notification: true
                 }
             }
 

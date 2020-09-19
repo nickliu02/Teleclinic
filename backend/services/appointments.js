@@ -1,7 +1,7 @@
 const client = require('./database').client;
 const {retrieve_zoom_auth} = require('./auth');
-const request = require('request');
 const nodemailer = require('nodemailer');
+const request = require('request');
 function make_password(length) {
     var result = '';
     var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -48,7 +48,7 @@ function createMeeting(body,start_time,doctor_email,email){
         )
         //send_email(,email)
 
-
+        
     });
 }
 function send_email(from,to){
@@ -84,7 +84,19 @@ const isDoctor = (email) => client.query(
     .then(res => res.rows[0])
     .catch(e => e);
 
+const getDoctor = (email) => client.query(
+    'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
+    [email]
+)
+    .then(res => res.rows[0])
+    .catch(e => e);
 
+const getPatient = (email) => client.query(
+    'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
+    [email]
+)
+    .then(res => res.rows[0])
+    .catch(e => e);
 
 module.exports = {
     createMeeting:createMeeting,

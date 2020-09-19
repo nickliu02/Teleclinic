@@ -34,6 +34,7 @@
                         <v-btn
                           depressed
                           small
+                          @click="openAppointmentsModal(item)"
                         >
                           View
                         </v-btn>
@@ -76,6 +77,7 @@
                         <v-btn
                           depressed
                           small
+                          @click="openWalkInModal(item)"
                         >
                           View
                         </v-btn>

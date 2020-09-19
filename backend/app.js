@@ -20,6 +20,12 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "api.zhehaizhang.com"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //Initialize routes
 app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);

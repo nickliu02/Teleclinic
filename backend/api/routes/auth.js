@@ -15,14 +15,14 @@ authRouter.post('/register',async (req,res,next)=>{
 
 
 
-authRouter.post('/', async (req,res,next) => {
+authRouter.post('/login', async (req,res,next) => {
 
     const { email, password } = req.body;
     console.log(email,password);
 
-    //const token = await login("santaclaus@gmail.com", "hohoho");
+    const token = await login("santaclaus@gmail.com", "hohoho");
 
-    res.send({accessToken: "test"});
+    res.send({accessToken: token});
 });
 
 module.exports = authRouter;

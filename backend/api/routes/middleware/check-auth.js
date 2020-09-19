@@ -1,4 +1,4 @@
-const KEY = require('../config').KEY;
+const KEY = require('../../../config').KEY;
 
 const jwt = require('jsonwebtoken');
 

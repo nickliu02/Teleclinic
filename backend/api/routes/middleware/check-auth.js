@@ -7,7 +7,7 @@ module.exports = (req,res,next) => {
         const token = req.header("x-access-token");
         const decoded = jwt.verify(token, KEY)
 
-        req.userData = decoded;
+        req.userData = decoded.email;
     }
     catch(error){
         return res.status(401).json({

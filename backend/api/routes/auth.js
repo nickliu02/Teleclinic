@@ -22,8 +22,9 @@ authRouter.post('/login', async (req,res,next) => {
     console.log(email,password);
 
     const token = await login(email,password);
-
-    res.send({accessToken: token,isDoctor:isDoctor(email)});
+    const boo = await isDoctor(email);
+    console.log(boo)
+    res.send({accessToken: token,isDoctor:boo});
 });
 
 module.exports = authRouter;

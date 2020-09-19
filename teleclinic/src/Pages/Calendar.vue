@@ -3,13 +3,16 @@
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat color="white">
+          <v-btn color="primary" class="mr-4" @click="dialog = true" dark>
+            Add Appointment
+          </v-btn>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
             Today
           </v-btn>
-          <v-btn fab text small color="grey darken-2" @click="prev">
+          <v-btn fab text small color="grey darken-2" @click="prev" >
             <v-icon small>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-btn fab text small color="grey darken-2" @click="next">
+          <v-btn fab text small color="grey darken-2" @click="next" class="mr-4">
             <v-icon small>mdi-chevron-right</v-icon>
           </v-btn>
           <v-toolbar-title v-if="$refs.calendar">
@@ -45,6 +48,24 @@
           </v-menu>
         </v-toolbar>
       </v-sheet>
+
+      <v-dialog v-model="dialog" max-width="500">
+        <v-card>
+          <v-container>
+            <v-form @submit.prevent="addAppointment">
+                <h1 style ="text-align:center;">Make Appointment</h1>
+                <v-text-field v-model="details" type="text" label="Reason for Appointment (required)"></v-text-field>
+                <v-text-field v-model="start" type="text" label="Start Time (required)"></v-text-field>
+                <v-text-field v-model="end" type="text" label="End Time (required)"></v-text-field>
+                <div style = "text-align:center;">
+                  <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
+                </div>
+            </v-form>
+          </v-container>
+        </v-card>
+
+      </v-dialog>
+
       <v-sheet height="600">
         <v-calendar
           ref="calendar"
@@ -119,8 +140,14 @@
       selectedElement: null,
       selectedOpen: false,
       events: [],
+      name:null,
+      details:null,
+      start:null,
+      end:null,
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      dialog: false,
+      dialogDate: false
     }),
     mounted () {
       this.$refs.calendar.checkChange()
@@ -158,20 +185,16 @@
 
         nativeEvent.stopPropagation()
       },
-      updateRange ({ start, end }) {
-        const events = []
+      updateRange () {
+        let events = []
 
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
 
-        for (let i = 0; i < eventCount; i++) {
+        for (let i = 0; i < 1; i++) {
 
           events.push({
             name: "Hello World",
             start: Date.now(),
-            end: Date.now() + 1000,
+            end: Date.now() + 1000*60*60*3,
             color: this.colors[this.rnd(0, this.colors.length - 1)],
             timed: true,
           })

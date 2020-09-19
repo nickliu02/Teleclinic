@@ -67,7 +67,7 @@
                   </v-date-picker>
                 </v-menu>
 
-                <v-text-field v-model="end" type="text" label="End Time (required)"></v-text-field>
+                <v-select :items="availableT" label="Select Available Time (required)" @click="updateAvailableTimes(date)" dense solo></v-select>
                 <div style = "text-align:center;">
                   <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
                 </div>
@@ -163,41 +163,49 @@
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
       times: ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','1:00 PM','1:30 PM','2:00 PM','2:30 PM', '3:00 PM', '3:30 PM','4:00 PM','4:30 PM','5:00 PM'],
+      availableT: [],
+
       dialog: false,
-      dialogDate: false
+      dialogDate: false,
+      meetingST: []
     }),
     mounted () {
       this.$refs.calendar.checkChange()
+      this.meetingST = [this.toTimestamp("2020-09-19","9:00 AM")]
     },
 
     methods: {
 
-      toTimestamp(date,time,m){
-        var dL = date.split("-")
-        var tL = time.split(":")
-        if(m=="PM"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
-        var timeS = new Date(Date.UTC(dL[0],dL[1],dL[2],tL[0],tL[1]))
+      toTimestamp(date,timem){
+        let timemL = timem.split(" ")
+        let time = timemL[0]
+        let m = timemL[1]
+        let dL = date.split("-")
+        let tL = time.split(":")
+        if(m=="PM"&& time!="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
+        if(m=="AM"&&time=="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString() }
+        let timeS = new Date(Date.UTC(dL[0],dL[1],dL[2],tL[0],tL[1]))
         console.log(timeS.getTime())
-        return timeS.getTime()
+        return timeS.getTime().toString()
       },
       toToDfromTimestamp(ts){
-        var d = new Date(ts)
-        var dL = d.toTimeString().split(":")
-        var hr = parseInt(dL[0],10)
-        var curPeriod = "AM"
+        let d = new Date(ts)
+        let dL = d.toTimeString().split(":")
+        let hr = parseInt(dL[0],10)
+        let curPeriod = "AM"
         if(hr<=23 && hr>=12){
           curPeriod = "PM"
         }
         if(hr>12){
           hr-=12
         }
-        var h = hr.toString()
+        let h = hr.toString()
         return h+":"+dL[1]+" "+curPeriod
       },
       toDatefromTimestamp(ts){
-        var d = new Date(ts)
-        var dat = ""+d.getDate()
-        var mon = ""+(d.getMonth()+1)
+        let d = new Date(ts)
+        let dat = ""+d.getDate()
+        let mon = ""+(d.getMonth()+1)
         if (dat.length==1){
           dat = "0"+dat
         }
@@ -252,6 +260,16 @@
 
           return this.today
         }
+      },
+      updateAvailableTimes(dat){
+        let aMeetings = []
+        for(var i = 0;i<this.times.length-1;i+=1){
+          if(!this.meetingST.includes(this.toTimestamp(dat,this.times[i]))){
+              aMeetings.push(this.times[i] + " - "+this.times[i+1])
+          }
+        }
+        this.availableT=aMeetings
+
       },
       updateRange () {
         let events = []

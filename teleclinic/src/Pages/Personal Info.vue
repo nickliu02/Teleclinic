@@ -24,7 +24,7 @@
 
               <v-row
                 justify="center"
-                p="0"
+                class="ma-0 pa-0"
               >
               
                 <v-col
@@ -55,6 +55,7 @@
               <v-row
                 justify="center"
                 p="0"
+                class="ma-0 pa-0"
               >
               
                 <v-col
@@ -84,6 +85,7 @@
               <v-row
                 justify="center"
                 p="0"
+                class="ma-0"
               >
               
                 <v-col
@@ -96,7 +98,7 @@
                   </div>
 
                   <div v-if="n===2">
-                    <p style="font-weight: normal; margin-right: 360px">{{ health_card_number }}</p>
+                    <p style="font-weight: normal; margin-right: 340px">{{ health_card_number }}</p>
                   </div>
                   
                 </v-col>

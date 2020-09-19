@@ -1,5 +1,5 @@
 const client = require('./database').client;
-const {retrive_zoom_auth} = require('./auth');
+const {retrieve_zoom_auth} = require('./auth');
 const nodemailer = require('nodemailer');
 function make_password(length) {
     var result = '';

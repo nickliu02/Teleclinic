@@ -13,7 +13,7 @@ appointmentRouter.get('/get',async (req,res)=>{
     //Check if it's doctor. If it's doctor, do where statement
     const value = await isDoctor(req.userData);
     console.log(value);
-    res.status(200);
+    res.status(201);
 });
 
 module.exports=appointmentRouter;

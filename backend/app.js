@@ -12,19 +12,9 @@ const zoomRoutes = require('./api/routes/zoom')
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
-var corsOptions = {
-    origin: '*',
-    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "api.zhehaizhang.com"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors());
+
 
 //Initialize routes
 app.use('/auth',authRoutes);

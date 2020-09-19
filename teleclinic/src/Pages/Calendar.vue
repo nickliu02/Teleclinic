@@ -69,7 +69,7 @@
 
                 <v-select v-model="form.timeSelected" :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="updateAvailableTimes(form.date)" dense solo></v-select>
                 <div style = "text-align:center;">
-                  <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog=false">Create Appointment</v-btn>
+                  <v-btn type="submit" color="primary" class="mr-4" @click.stop="submitDialog()">Create Appointment</v-btn>
                 </div>
             </v-form>
           </v-container>
@@ -153,7 +153,7 @@
         name: null,
         details: null,
         start: null,
-        end: null,
+        finish: null,
         timed: true,
         color: "primary",
         doctor_email: "santaclaus@gmail.com"
@@ -187,10 +187,22 @@
     methods: {
       async getAppointments(){//individual appointments onlylet snapshot =
         // let snapshot = awuait db.collection('calEvent').get()
-        let event = {}
-        event = {id: "name",start: 1600534864379,end:1600535864379,details:"Corona Virus", name: "Doctor's Appointment", timed: true, color:"primary"}
+        let token = localStorage.getItem("token")
+        let data = await this.$axios.get(this.$API_URL+"/appointments/get",{
+          header: {token:token}}).catch(e => console.log(e))
         let e = [];
-        e.push(event)
+        data.foreach(doc=>{
+          let event = {id: "name",start: 1600534864379,end:1600535864379,details:"Corona Virus", name: "Doctor's Appointment", timed: true, color:"primary"}
+          event.id = doc.id
+          event.start = doc.start
+          event.end = doc.finish
+          event.details = doc.details
+          event.name = doc.name
+          event.timed = doc.timed
+          event.color = doc.color
+          e.push(event)
+        })
+
         this.events = e
         console.log(this.events.length)
 
@@ -209,7 +221,7 @@
 
 
           this.newAppointment.start = startTS
-          this.newAppointment.end = endTS
+          this.newAppointment.finish = endTS
           this.newAppointment.name = name
           this.newAppointment.details = reason
 
@@ -221,10 +233,15 @@
                   ...newAppointment
               })
           .catch(e => console.log(e))
+          this.getAppointments()
           //send above variables + true
         }
       },
-
+      submitDialog(){
+        if(this.$refs.form.validate()){
+          this.dialog=false;
+        }
+      },
       toTimestamp(date,timem){
         let timemL = timem.split(" ")
         let time = timemL[0]

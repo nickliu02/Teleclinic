@@ -1,11 +1,11 @@
 const express = require('express');
-const update = require('../../services/update').update;
+const {info} = require('../../services/info');
 
 const checkAuth = require('./middleware/check-auth');
 
-const updateRouter = express.Router();
+const infoRouter = express.Router();
 
-updateRouter.post('/', checkAuth, async (req,res,next)=>{
+infoRouter.post('/update', checkAuth, async (req,res,next)=>{
     const {first_name, last_name, phone_number,health_card_number} = req.body;
 
     await update(req.userData, first_name, last_name, phone_number, health_card_number);
@@ -16,4 +16,4 @@ updateRouter.post('/', checkAuth, async (req,res,next)=>{
 
 
 
-module.exports = updateRouter;
+module.exports = infoRouter;

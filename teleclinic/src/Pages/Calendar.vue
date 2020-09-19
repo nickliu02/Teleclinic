@@ -150,12 +150,13 @@
         timeSelected: null
       },
       newAppointment: {
-        email: null,
         name: null,
         details: null,
         start: null,
         end: null,
-        timed: true
+        timed: true,
+        color: "primary",
+        doctor_email: "santaclaus@gmail.com"
       },
       today: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -202,24 +203,28 @@
 
           let startTS = this.toTimestamp(this.form.date, startT)
           let endTS = this.toTimestamp(this.form.date,endT)
-          let email = localStorage.getItem("email")
+          let token = localStorage.getItem("token")
           let name = "Doctor's Appointment"
           let reason = this.form.reason
 
+
           this.newAppointment.start = startTS
           this.newAppointment.end = endTS
-          this.newAppointment.email = email
           this.newAppointment.name = name
           this.newAppointment.details = reason
 
+
           const newAppointment = this.newAppointment
-          this.$axios.post(this.$API_URL+"/auth/register", {
+          this.$axios.post(this.$API_URL+"/appointments/add",{
+            header: {token:token}},
+            {
                   ...newAppointment
               })
           .catch(e => console.log(e))
           //send above variables + true
         }
       },
+
       toTimestamp(date,timem){
         let timemL = timem.split(" ")
         let time = timemL[0]

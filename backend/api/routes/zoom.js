@@ -27,8 +27,7 @@ zoomRouter.get('/create',async (req,res)=>{
 
     };
     request(authOptions, function(error, response, body) {
-        console.log(body);
-        console.log(body.accessToken);
+        console.log(body.access_token);
 
         const meetOptions = {
             method:"POST",
@@ -57,8 +56,8 @@ zoomRouter.get('/create',async (req,res)=>{
 
         };
         request(meetOptions,function(error,response,body){
-            console.log(body.start_url);
-            console.log(body.join_url);
+            console.log(body);
+            console.log(error);
 
         });
     });

@@ -77,11 +77,6 @@ export default {
             this.$router.push('/');
             let form = this.form;
 
-            if (form.email == "santaclaus@gmail.com") {
-                window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2F");
-
-            }
-
             if (this.$refs.form.validate()) {
                  this.$axios.post(this.$API_URL+"/auth/login", {
                         ...form
@@ -90,8 +85,17 @@ export default {
                     console.log(response.data.accessToken )
                     if (typeof response.data.accessToken === 'string'){
                         localStorage.setItem('jwt',response.data.accessToken);
-                        localStorage.setItem('email', form.email) 
-                        this.$router.push('Appointments')
+                        localStorage.setItem('isDoctor', response.data.isDoctor);
+                        localStorage.setItem('email', form.email) ;
+
+                        if (localStorage.getItem('isDoctor')){
+                            window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2F");
+                            this.$router.push('doctor_queue');
+                        }
+                        else {
+                            this.$router.push('appointments');
+                        }
+                        
                         
                     }
                 

@@ -80,6 +80,14 @@ router.beforeEach((to, from, next) => {
       next({name: 'Queue'})
     }
   }
+  else if(to.matched.some(record => record.meta.isDoctor)) {
+    if(localStorage.getItem('jwt') == null){
+      next()
+    }
+    else{
+      next({name: 'Appointments'})
+    }
+  }
   else{
     next()
   }

@@ -1,7 +1,6 @@
 <template>
   <v-app>
        <v-dialog
-          v-model="isOngoingChallengeModalOpen"
           max-width="350"
         >
 

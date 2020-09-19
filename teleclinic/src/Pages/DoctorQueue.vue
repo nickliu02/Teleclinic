@@ -4,6 +4,8 @@
         <v-card
           width="300"
           class="ma-10"
+          height="600"
+          
         >
             <v-card-title class="black--text accent">
               <h1 class="mx-auto" id="welcome">
@@ -47,6 +49,7 @@
         <v-card
           width="300"
           class="ma-10"
+          height="600"
         >
             <v-card-title class="black--text accent">
               <h1 class="mx-auto" id="welcome">
@@ -87,11 +90,15 @@
 
       </v-row>
 
+      <AppointmentModal v-if="appointmentModalOpen"></AppointmentModal>
+
       
   </v-app>
 </template>
 
 <script>
+import AppointmentModal from "../components/AppointmentModal";
+
 export default {
     name: "DoctorQueue",
     data() {
@@ -156,6 +163,10 @@ export default {
             this.appointments.push(this.appointments[0]);
             this.walk_ins.push(this.walk_ins[0]);
         }
+    },
+
+    components: {
+        AppointmentModal
     }
     
 }

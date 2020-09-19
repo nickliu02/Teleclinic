@@ -149,6 +149,14 @@
         reason: null,
         timeSelected: null
       },
+      newAppointment: {
+        email: null,
+        name: null,
+        details: null,
+        start: null,
+        end: null,
+        timed: true
+      },
       today: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -176,7 +184,7 @@
     },
 
     methods: {
-      getAppointments(){//individual appointments onlylet snapshot =
+      async getAppointments(){//individual appointments onlylet snapshot =
         // let snapshot = awuait db.collection('calEvent').get()
         let event = {}
         event = {id: "name",start: 1600534864379,end:1600535864379,details:"Corona Virus", name: "Doctor's Appointment", timed: true, color:"primary"}
@@ -186,7 +194,32 @@
         console.log(this.events.length)
 
       },
+      async addAppointment(){
+        if(this.$refs.form.validate()){
+          let timeL = this.form.timeSelected.split(" - ")
+          let startT = timeL[0]
+          let endT = timeL[1]
 
+          let startTS = this.toTimestamp(this.form.date, startT)
+          let endTS = this.toTimestamp(this.form.date,endT)
+          let email = localStorage.getItem("email")
+          let name = "Doctor's Appointment"
+          let reason = this.form.reason
+
+          this.newAppointment.start = startTS
+          this.newAppointment.end = endTS
+          this.newAppointment.email = email
+          this.newAppointment.name = name
+          this.newAppointment.details = reason
+
+          const newAppointment = this.newAppointment
+          this.$axios.post(this.$API_URL+"/auth/register", {
+                  ...newAppointment
+              })
+          .catch(e => console.log(e))
+          //send above variables + true
+        }
+      },
       toTimestamp(date,timem){
         let timemL = timem.split(" ")
         let time = timemL[0]

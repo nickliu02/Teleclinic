@@ -8,7 +8,7 @@ const authRouter = express.Router();
 
 authRouter.post('/register',async (req,res,next)=>{
     const {email, first_name, last_name, password, phone_number,health_card_number} = req.body;
-    console.log(email, first_name, last_name, password, phone_number,health_card_number);
+    console.log("this is all the info",email, first_name, last_name, password, phone_number,health_card_number);
     const token = await register(email, first_name, last_name, password, phone_number, health_card_number);
 
     res.send({accessToken: token});

@@ -48,7 +48,7 @@ zoomRouter.get('/create',async (req,res)=>{
                     participant_video: true,
                     join_before_host: false,
                     mute_upon_entry: true,
-                    enforce_login: true,
+                    enforce_login: false,
                     registrants_email_notification: true
                 }
             }

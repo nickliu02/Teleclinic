@@ -1,5 +1,6 @@
 const client = require('./database').client;
 const {retrive_zoom_auth} = require('./auth');
+const nodemailer = require('nodemailer');
 function make_password(length) {
     var result = '';
     var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -44,10 +45,35 @@ function createMeeting(body,start_time,doctor_email){
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
             [body.start,body.finish,body.timed,body.color,body.doctor_email,body.details,body.name,body.start_url,body.join_url,pwd]
         )
+        //send_email()
 
 
 
 
+
+    });
+}
+function send_email(from,to){
+    let transport = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+            user: 'af1053a81e73b9',
+            pass: '275fdf28508932'
+        }
+    });
+    const message = {
+        from: 'elonmusk@tesla.com', // Sender address
+        to: 'to@email.com',         // List of recipients
+        subject: 'Design Your Model S | Tesla', // Subject line
+        text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
+    };
+    transport.sendMail(message, function(err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
     });
 }
 

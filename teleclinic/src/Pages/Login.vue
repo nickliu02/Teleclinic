@@ -90,7 +90,7 @@ export default {
                         console.log(localStorage.getItem('isDoctor'));
 
                         if (localStorage.getItem('isDoctor') == "true"){
-                            window.location.replace('"https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2F"');
+                            window.location = "https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2F";
                             
                         }
                         else {

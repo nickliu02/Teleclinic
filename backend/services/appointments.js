@@ -70,7 +70,7 @@ function send_email(from,to){
         if (err) {
             console.log(err)
         } else {
-            console.log(info);
+            console.log(info,"nithns mail");
         }
     });
 }

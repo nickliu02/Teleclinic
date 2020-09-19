@@ -20,10 +20,10 @@ export default {
 
         if (code) {
           console.log("sending code")
-          this.$axios.post(this.$API_URL+"/zoom/create", {header: {'x-access-token': localStorage.getItem('token')}},{
+          this.$axios.post(this.$API_URL+"/zoom/create", {
           code: code,
           email: "santaclaus@gmail.com"
-          }) 
+          }, {headers: {'x-access-token': localStorage.getItem('jwt')}}) 
           .then(r => {
             console.log(r);
             this.$router.push('doctor_queue');

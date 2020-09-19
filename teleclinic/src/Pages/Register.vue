@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="{background: '#eee'}">
         <v-main>
             <v-container>
                 <v-row

@@ -1,5 +1,6 @@
 const client = require('./database').client;
 const {retrive_zoom_auth} = require('./auth');
+const nodemailer = require('nodemailer');
 function make_password(length) {
     var result = '';
     var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -8,7 +9,7 @@ function make_password(length) {
     }
     return result;
 }
-function createMeeting(start_time,doctor_email){
+function createMeeting(body,start_time,doctor_email,email){
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
     const meetOptions = {
@@ -41,16 +42,50 @@ function createMeeting(start_time,doctor_email){
 
         // data.start_url
         client.query(
-            'INSERT ',
-            []
+            'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+            [body.start,body.finish,body.timed,body.color,body.doctor_email,body.details,body.name,body.start_url,body.join_url,pwd,email]
         )
+        //send_email(,email)
 
-
-
-
+        
+    });
+}
+function send_email(from,to){
+    let transport = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+            user: 'af1053a81e73b9',
+            pass: '275fdf28508932'
+        }
+    });
+    const message = {
+        from: 'elonmusk@tesla.com', // Sender address
+        to: 'to@email.com',         // List of recipients
+        subject: 'Design Your Model S | Tesla', // Subject line
+        text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
+    };
+    transport.sendMail(message, function(err, info) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(info);
+        }
     });
 }
 
+
+
+const isDoctor = (email) => client.query(
+    'SELECT EXISTS(SELECT email from doctors) where email = $1',
+    [email]
+)
+    .then(res => res.rows[0])
+    .catch(e => e);
+
+
+
 module.exports = {
-    assignCode: assignCode
+    createMeeting:createMeeting,
+    isDoctor:isDoctor
 }

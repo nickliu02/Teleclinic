@@ -25,8 +25,13 @@ const generateToken = (email) => jwt.sign(
     KEY,
     {expiresIn: "24h"}
 );
+//get the zoom auth by email and return it
+const retrieve_zoom_auth=(email)=>client.query(
+
+)
 
 module.exports = {
     register: register,
-    login: login
+    login: login,
+    retrieve_zoom_auth:retrieve_zoom_auth
 }

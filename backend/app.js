@@ -7,7 +7,8 @@ const app = express();
 
 //Routes
 const authRoutes = require('./api/routes/auth');
-const zoomRoutes = require('./api/routes/zoom')
+const zoomRoutes = require('./api/routes/zoom');
+const appointmentsRoutes = require('./api/routes/appointments');
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
@@ -19,6 +20,7 @@ app.use(cors());
 //Initialize routes
 app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);
+app.use('/appointments',appointmentsRoutes)
 
 
 //Errors

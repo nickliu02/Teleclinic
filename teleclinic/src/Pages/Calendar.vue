@@ -103,33 +103,85 @@
     </v-col>
   </v-row>
 </template>
+
 <script>
-  export default{
+  export default {
     data: () => ({
-      today: new Date().toISOString().substr(0,10),
-      focus: new Date().toISOString().substr(0,10),
-      type: "month",
-      typeToLabel:{
-        month: "Month",
-        week: "Week",
-        day: "Day",
-        "4day": "4 days"
+      focus: '',
+      type: 'month',
+      typeToLabel: {
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        '4day': '4 Days',
       },
-      name: null,
-      details: null,
-      start: null,
-      end: null,
-      color: "#1976D2",
-      currentlyEditing: null,
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      event: [],
-      dialog: false
+      events: [],
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
     }),
-    mounted(){
-      this.getEvents();
-    }
+    mounted () {
+      this.$refs.calendar.checkChange()
+    },
+    methods: {
+      viewDay ({ date }) {
+        this.focus = date
+        this.type = 'day'
+      },
+      getEventColor (event) {
+        return event.color
+      },
+      setToday () {
+        this.focus = ''
+      },
+      prev () {
+        this.$refs.calendar.prev()
+      },
+      next () {
+        this.$refs.calendar.next()
+      },
+      showEvent ({ nativeEvent, event }) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          setTimeout(() => this.selectedOpen = true, 10)
+        }
 
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          setTimeout(open, 10)
+        } else {
+          open()
+        }
+
+        nativeEvent.stopPropagation()
+      },
+      updateRange ({ start, end }) {
+        const events = []
+
+        const min = new Date(`${start.date}T00:00:00`)
+        const max = new Date(`${end.date}T23:59:59`)
+        const days = (max.getTime() - min.getTime()) / 86400000
+        const eventCount = this.rnd(days, days + 20)
+
+        for (let i = 0; i < eventCount; i++) {
+
+          events.push({
+            name: "Hello World",
+            start: 1600490130,
+            end: 1600493730,
+            color: this.colors[this.rnd(0, this.colors.length - 1)],
+            timed: true,
+          })
+        }
+
+        this.events = events
+      },
+      rnd (a, b) {
+        return Math.floor((b - a + 1) * Math.random()) + a
+      },
+    },
   }
 </script>

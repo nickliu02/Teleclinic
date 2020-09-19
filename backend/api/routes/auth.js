@@ -5,25 +5,25 @@ const login = require('../../services/auth').login;
 
 const authRouter = express.Router();
 
-authRouter.post('/register',async (req,res,next)=>{
+authRouter.post('/register',(req,res,next)=>{
     const {email, first_name, last_name, password, phone_number,health_card_number} = req.body;
 
-    const token = await register(email, first_name, last_name, password, phone_number, health_card_number);
+    const token = register(email, first_name, last_name, password, phone_number, health_card_number);
     
     res.send({accessToken: token});
 });
 
-authRouter.get('/register',async (req,res,next)=>{
+authRouter.get('/register',(req,res,next)=>{
     
     res.send({accessToken: "success"});
 });
 
-authRouter.post('/login', async (req,res,next) => {
+authRouter.post('/login', (req,res,next) => {
 
     const { email, password } = req.body;
     console.log(email,password);
 
-    const token = await login("santaclaus@gmail.com", "hohoho");
+    const token = login("santaclaus@gmail.com", "hohoho");
 
     res.send({accessToken: token});
 });

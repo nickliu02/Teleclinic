@@ -1,5 +1,7 @@
 const client = require('./database').client;
-function createMeeting(token,start_time){
+const {retrive_zoom_auth} = require('./auth');
+function createMeeting(token,start_time,doctor_email){
+    const token = retrieve_zoom_auth(doctor_email);
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",
@@ -29,7 +31,10 @@ function createMeeting(token,start_time){
         let data = JSON.parse(body);
 
         // data.start_url
-        client.query()
+        client.query(
+            'INSERT ',
+            []
+        )
 
 
 

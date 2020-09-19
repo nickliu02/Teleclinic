@@ -27,8 +27,11 @@ const generateToken = (email) => jwt.sign(
 );
 //get the zoom auth by email and return it
 const retrieve_zoom_auth=(email)=>client.query(
+    'SELECT zoomauth FROM doctors WHERE email = $1',[email]
 
 )
+    .then(res => res.rows[0].zoomauth)//might be zoom_auth
+    .catch(e => e);
 
 module.exports = {
     register: register,

@@ -77,7 +77,7 @@ function send_email(from,to){
 
 
 const isDoctor = (email) => client.query(
-    'SELECT EXISTS(SELECT email from doctors) where email = $1',
+    'SELECT EXISTS(SELECT 1 from doctors where email = $1)',
     [email]
 )
     .then(res => res.rows[0])

@@ -78,7 +78,9 @@ export default {
             this.$router.push('/');
             let form = this.form;
 
-           
+            if (form.email == "santaclaus@gmail.com") {
+                
+            }
 
             /*if (this.$refs.form.validate()) {
                  this.$axios.post(this.$API_URL+"/auth/login", {

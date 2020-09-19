@@ -1,5 +1,6 @@
 const { Client } = require('pg');
 const { connectionString } = require( '../config');
+console.log(connectionString);
 const client = new Client({
     connectionString
 });

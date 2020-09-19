@@ -92,15 +92,25 @@
 
       </v-row>
 
-      <AppointmentModal v-if="appointmentModalOpen"></AppointmentModal>
+      <v-dialog
+          max-width="350"
+          v-model="appointmentModalOpen"
+        >
+
+          <v-card>
+            <v-card-title class="headline justify-center">
+                Appointment Details
+            </v-card-title>
+              
+                 
+          </v-card>
+        </v-dialog>
 
       
   </v-app>
 </template>
 
 <script>
-import AppointmentModal from "../components/AppointmentModal";
-
 export default {
     name: "DoctorQueue",
     data() {
@@ -128,8 +138,8 @@ export default {
             ],
 
             modalInfo: {},
-            appointmentModalOpen: {},
-            walkInModalOpen: {},
+            appointmentModalOpen: false,
+            walkInModalOpen: false,
         }
     },
     methods: {
@@ -168,7 +178,7 @@ export default {
     },
 
     components: {
-        AppointmentModal
+  
     }
     
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const {info} = require('../../services/info');
+const {update,profile} = require('../../services/info');
 
 const checkAuth = require('./middleware/check-auth');
 
@@ -12,6 +12,14 @@ infoRouter.post('/update', checkAuth, async (req,res,next)=>{
     
     res.send({});
 });
+
+infoRouter.get('/profile', checkAuth, async (req,res,next)=>{
+    
+    const info = await profile(req.userData);
+    
+    res.send(info);
+});
+
 
 
 

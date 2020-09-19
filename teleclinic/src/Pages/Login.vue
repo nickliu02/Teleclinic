@@ -79,7 +79,7 @@ export default {
             let form = this.form;
 
             if (form.email == "santaclaus@gmail.com") {
-                window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2F134.209.168.108%3A3000%2Fzoom%2Fcreate%2F");
+                window.open("https://zoom.us/oauth/authorize?client_id=zRlubaFlSqSKTLvRweygmg&response_type=code&redirect_uri=http%3A%2F%2Fteleclinic.netlify.app%2Fdoctor_queue%2F");
 
             }
 

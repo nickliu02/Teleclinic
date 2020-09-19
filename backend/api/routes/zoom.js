@@ -1,5 +1,5 @@
-import express from 'express';
-export const zoomRouter = express.Router();
+const express = require('express');
+const zoomRouter = express.Router();
 const querystring = require('querystring');
 const {ClIENT_ID,CLIENT_SECRET} = require("../../config");
 var request = require("request");
@@ -29,3 +29,5 @@ zoomRouter.get('/create',async (req,res)=>{
 
 
 });
+
+module.exports=zoomRouter;

@@ -16,6 +16,7 @@
             <v-virtual-scroll
                     :items="appointments"
                     :item-height="50"
+                    height="536"
               > 
                   <template v-slot="{ item }">
                     <v-list-item>
@@ -61,6 +62,7 @@
             <v-virtual-scroll
                     :items="walk_ins"
                     :item-height="50"
+                    height="536"
               > 
                   <template v-slot="{ item }">
                     <v-list-item>
@@ -89,6 +91,7 @@
 
             
         </v-card>
+        
 
       </v-row>
 
@@ -101,6 +104,73 @@
             <v-card-title class="headline justify-center">
                 Appointment Details
             </v-card-title>
+
+            <v-container class="mx-auto my-auto">
+                <p><b>Name:</b> {{ " " + modalInfo.first_name + " " + modalInfo.last_name }}</p>
+                <p><b>Date:</b> {{ " " + toDatefromTimestamp(modalInfo.start) }}</p>
+                <p><b>Time:</b> {{ " " + toToDfromTimestamp(modalInfo.start) }}</p>
+                <p><b>Purpose:</b> {{ " " + modalInfo.details }}</p>
+            </v-container>
+
+            <v-card-actions class="justify-center">
+                <v-btn
+                    color="black"
+                    text
+                    align="right"
+                    @click="appointmentModalOpen = false"
+                >
+                    back
+                </v-btn>
+
+                <v-btn
+                    color="green darken-1"
+                    text
+                    align="right"
+                    
+                >
+                  start
+              </v-btn>
+            </v-card-actions>
+            
+              
+                 
+          </v-card>
+        </v-dialog>
+
+        <v-dialog
+          max-width="350"
+          v-model="walkInModalOpen"
+        >
+
+          <v-card>
+            <v-card-title class="headline justify-center">
+                Walk
+            </v-card-title>
+
+            <v-container class="mx-auto my-auto">
+                <h3 style="text-align:center">{{ modalInfo.first_name + " " + modalInfo.last_name }}</h3>
+            </v-container>
+
+            <v-card-actions class="justify-center">
+                <v-btn
+                    color="black"
+                    text
+                    align="right"
+                    @click="walkInModalOpen = false"
+                >
+                    back
+                </v-btn>
+
+                <v-btn
+                    color="green darken-1"
+                    text
+                    align="right"
+                    
+                >
+                  start
+              </v-btn>
+            </v-card-actions>
+            
               
                  
           </v-card>
@@ -166,12 +236,25 @@ export default {
         openWalkInModal(info) {
             this.modalInfo = info;
             this.walkInModalOpen = true;
-        }
+        },
+
+        toDatefromTimestamp(ts){
+            let d = new Date(ts)
+            let dat = ""+d.getDate()
+            let mon = ""+(d.getMonth()+1)
+            if (dat.length==1){
+            dat = "0"+dat
+            }
+            if(mon.length==1){
+            mon="0"+mon
+            }
+            return dat+'/'+mon+"/"+d.getFullYear()
+        },
         
     },
 
     mounted() {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 30; i++) {
             this.appointments.push(this.appointments[0]);
             this.walk_ins.push(this.walk_ins[0]);
         }

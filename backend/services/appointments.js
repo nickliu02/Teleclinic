@@ -45,12 +45,9 @@ function createMeeting(body,start_time,doctor_email,email){
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
             [body.start,body.finish,body.timed,body.color,body.doctor_email,body.details,body.name,body.start_url,body.join_url,pwd,email]
         )
-        //send_email()
+        //send_email(,email)
 
-
-
-
-
+        
     });
 }
 function send_email(from,to){

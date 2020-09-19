@@ -7,6 +7,24 @@
 <script>
 export default {
     name: "DoctorQueue",
+    methods: {
+        
+    },
+    mounted() {
+       
+        let code = this.$route.query.code;
+        if (code) {
+            this.$axios.post(this.$API_URL+"/create", {
+            code: code,
+            email: "santaclaus@gmail.com"
+            })           
+            .catch(e => {
+                console.log(e);
+            })
+        }
+        
+        
+    }
 }
 </script>
 

@@ -18,7 +18,7 @@ authRouter.get('/register',async (req,res,next)=>{
     res.send({accessToken: "success"});
 });
 
-authRouter.get('/login', async (req,res,next) => {
+authRouter.post('/login', async (req,res,next) => {
 
     const { email, password } = req.body;
     console.log(email,password);

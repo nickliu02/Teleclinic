@@ -9,8 +9,8 @@ export default new Vuetify({
         themes: {
             light: {
                 primary: "#4ABDAC", //Where u change colours
-                secondary: "FC4A1A",
-                accent: "F7B733",
+                secondary: "#FC4A1A",
+                accent: "#F7B733",
                 error: colors.red.accent3,
                 success: colors.blue.base
             }

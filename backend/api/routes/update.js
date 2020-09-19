@@ -1,4 +1,5 @@
 const express = require('express');
+const update = require('../../services/update').update;
 
 const checkAuth = require('./middleware/check-auth');
 
@@ -7,9 +8,9 @@ const updateRouter = express.Router();
 updateRouter.post('/', checkAuth, async (req,res,next)=>{
     const {first_name, last_name, phone_number,health_card_number} = req.body;
 
-    const token = await register(req.userData, first_name, last_name, phone_number, health_card_number);
+    await update(req.userData, first_name, last_name, phone_number, health_card_number);
     
-    res.send({accessToken: token});
+    res.send({});
 });
 
 

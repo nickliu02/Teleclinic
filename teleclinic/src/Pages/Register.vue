@@ -127,7 +127,6 @@ export default {
             form : {
               username : "",
               first_name: "",
-              middle_name: "",
               last_name: "",
               health_card_number: "",
               password : "",
@@ -136,8 +135,6 @@ export default {
             },
             rules: {
               required: value => !!value || 'Required.',
-              min: val => val.length >= 8 || 'Min 8 characters',
-              min2: val => val.length >= 3 || 'Min 3 characters',
               match: val => val === this.form.password || 'Password must match',
               emailRules: v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'Email must be valid',
               healthCardRules: v => !v || /[1-9]\d{9}/.test(v) || 'Health card number must be valid',
@@ -154,7 +151,7 @@ export default {
             console.log("registering")
             const form = this.form;
             if (0 < form.username.length && form.username.length <= 12 && 0<form.password.length  && form.password.length<=12 && form.password===form.otherpass){
-              this.$axios.post(this.$API_URL+"/auth/register", {
+              this.$axios.post(this.$API_URL+"/register", {
                           ...form
                       })
               .then(response => {

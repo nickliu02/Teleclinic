@@ -22,7 +22,7 @@ function createMeeting(body,start_time,doctor_email,email){
         },
         json:{
             topic: "appointment",
-            start_time: start_time,
+            start_time: new Date(start_time).toISOString().split(".")[0]+"Z",
             duration: 30,
             timezone: "UTC",
             password: pwd,
@@ -48,7 +48,7 @@ function createMeeting(body,start_time,doctor_email,email){
         )
         //send_email(,email)
 
-        
+
     });
 }
 function send_email(from,to){

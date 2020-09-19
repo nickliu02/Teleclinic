@@ -11,6 +11,7 @@ appointmentRouter.post('/add',checkAuth,async (req,res)=>{
 appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     //Check if it's doctor. If it's doctor, do where statement
     const value = await isDoctor(req.userData);
+    console.log(value);
     if (value.exists == true){
         //Do doctor
         const infos = await getDoctor(req.userData);

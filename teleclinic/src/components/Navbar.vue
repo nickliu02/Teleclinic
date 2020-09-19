@@ -71,7 +71,7 @@ export default {
   data: () => ({
     items: [
       { title: "Appointments", icon: mdiCalendarMonthOutline, route: "/appointments" },
-      { title: "Queue", icon: mdiHumanQueue, route: "/queue" },
+      { title: "Queue", icon: mdiHumanQueue, route: localStorage.getItem('isDoctor') == 'true' ? "/doctor_queue": "/queue" },
       { title: "Personal Info", icon: mdiBookInformationVariant, route: "/personal_info" },
     ],
 

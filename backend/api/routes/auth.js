@@ -22,7 +22,7 @@ authRouter.post('/login', async (req,res,next) => {
     console.log(email,password);
 
     const token = await login(email,password);
-
+    console.log(isDoctor(email));
     res.send({accessToken: token,isDoctor:isDoctor(email)});
 });
 

@@ -17,11 +17,11 @@ function createMeeting(body,start_time,doctor_email,email){
     start_time = parseInt(start_time)*1000;
     console.log(start_time);
     const token = retrieve_zoom_auth(doctor_email);
+    console.log("token",token);
     const pwd=make_password(6);
     var date = new Date(start_time);
     console.log("date",date);
-    let iso = date.toISOString();
-    console.log(iso);
+    let iso = date.toISOString().split('.')[0]+"Z";
 
     const meetOptions = {
         method:"POST",
@@ -32,7 +32,7 @@ function createMeeting(body,start_time,doctor_email,email){
         },
         json:{
             topic: "appointment",
-            start_time: new Date(start_time).toISOString().split(".")[0]+"Z",
+            start_time: iso,
             duration: 30,
             timezone: "UTC",
             password: pwd,

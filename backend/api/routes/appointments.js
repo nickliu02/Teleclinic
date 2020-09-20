@@ -35,6 +35,7 @@ appointmentRouter.post('/delete',checkAuth,async (req,res)=>{
 
 appointmentRouter.get('/getTimes',checkAuth,async (req,res)=>{
     const infos = await getTimes();
+    console.log(infos);
     res.send(infos);
     
 });

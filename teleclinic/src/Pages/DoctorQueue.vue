@@ -279,9 +279,10 @@ export default {
                 console.log(r)
             })
             .catch(e => console.log(e))
-            }
+            
 
-            //window.location = this.modalInfo.join_url;
+            window.location = this.modalInfo.join_url;
+        }
     },
 
     mounted() {

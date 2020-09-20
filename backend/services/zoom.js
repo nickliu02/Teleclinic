@@ -3,7 +3,6 @@ const {CLIENT_SECRET} = require("../config");
 const client = require('./database').client;
 const request = require("request");
 
-var schedule = require('node-schedule');
 
 let tokenRefresher = setInterval(function () {
     client.query(

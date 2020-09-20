@@ -20,7 +20,6 @@ appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     else{
         //Do pateint
         const infos = await getPatient(req.userData);
-        console.log(infos);
         res.send(infos);
     }
 });

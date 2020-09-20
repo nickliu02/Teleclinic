@@ -30,7 +30,7 @@ const retrieve_zoom_auth=(email)=>client.query(
     'SELECT zoomauth FROM doctors WHERE email = $1',[email]
 
 )
-    .then(res => res.rows[0])//might be zoom_auth
+    .then(res => res.rows)//might be zoom_auth
     .catch(e => e);
 
 module.exports = {

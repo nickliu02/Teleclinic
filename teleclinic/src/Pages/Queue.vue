@@ -132,7 +132,7 @@ export default {
         first_name: "",
         last_name: ""
       },
-      num: Math.ceil(Math.random() *5),
+      num: 6,
       place: 0,
 
   }),

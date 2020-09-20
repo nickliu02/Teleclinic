@@ -51,6 +51,8 @@
                     </v-col>
                 </v-row>
             </v-container>
+
+            <v-img src="../assets/tclinic.png" width="300" class="mx-auto"></v-img>
         </v-main>
 
 

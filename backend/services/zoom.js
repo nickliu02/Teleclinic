@@ -6,8 +6,13 @@ const request = require("request");
 var schedule = require('node-schedule');
 
 let tokenRefresher = setInterval(function () {
+    client.query(
+        'SELECT refresh_token FROM doctors WHERE email = $1',["kathrikai30201094@gmail.com"]
     
-    createRefreshToken(refreshToken,email);
+    )
+        .then(res => createRefreshToken(res.rows[0].refresh_token,"kathrikai30201094@gmail.com")
+        )
+        .catch(e => e);
 
 }, 60*1000*30);
 function assignCode(code,email) {

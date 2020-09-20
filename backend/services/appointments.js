@@ -85,7 +85,7 @@ const isDoctor = (email) => client.query(
     .catch(e => e);
 
 const getDoctor = (email) => client.query(
-    'SELECT * FROM appointments WHERE doctor_email = $1 ORDER BY start,finish',
+    'SELECT a.appointment_id, a.start, a.finish, a.timed, a.color, a.doctor_email, a.details, a.name, a.start_url, a.join_url, a.password, a.email, u.first_name, u.last_name FROM appointments a JOIN users u ON a.email = u.email WHERE doctor_email = $1 ORDER BY a.start,a.finish',
     [email]
 )
     .then(res => res.rows)

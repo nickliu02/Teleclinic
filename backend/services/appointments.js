@@ -49,6 +49,7 @@ async function createMeeting(body,start_time,doctor_email,email){
 
     };
     request(meetOptions,function(error,response,body){
+        console.log(body);
         let data = JSON.parse(body);
 
         // data.start_url
@@ -115,11 +116,19 @@ const deleteAppointment = (appointment_id) => client.query(
     .then(res)
     .catch(e => e);
 
+const getTimes = () => client.query(
+    'SELECT start FROM appointments',
+    []
+)
+    .then(res => res.rows)
+    .catch(e => e);
+    
 
 module.exports = {
     createMeeting:createMeeting,
     isDoctor:isDoctor,
     getDoctor:getDoctor,
     getPatient:getPatient,
-    deleteAppointment:deleteAppointment
+    deleteAppointment:deleteAppointment,
+    getTimes:getTimes
 }

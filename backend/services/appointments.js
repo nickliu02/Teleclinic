@@ -51,7 +51,7 @@ async function createMeeting(lmao,start_time,doctor_email,email){
     request(meetOptions,function(error,response,body){
         console.log(body);
         console.log(error);
-        let data = JSON.parse(body);
+        let data = body;
 
 
         // data.start_url

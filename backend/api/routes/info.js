@@ -14,7 +14,7 @@ infoRouter.post('/update', checkAuth, async (req,res,next)=>{
 });
 
 infoRouter.get('/profile', checkAuth, async (req,res,next)=>{
-    
+    console.log(req.userData, "email sent")
     const info = await profile(req.userData);
     console.log(info,"info")
     res.json(info);

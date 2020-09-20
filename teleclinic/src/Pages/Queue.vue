@@ -85,7 +85,7 @@
             <v-divider></v-divider>
 
             <div style="padding: 20px">
-              <h3 align="center">There are {{}} people in the queue.</h3>
+              <h3 align="center">There are {{7}} people in the queue.</h3>
               <h3 align="center">Estimated wait time: {{waitTimeToString(getWaitTime())}}</h3>
 
               <div align="center" style="margin: 10px">
@@ -141,11 +141,17 @@ export default {
     },
 
     getWaitTime() {
-      return 0;
+      return 6300;
     },
 
     async getPlaceInQueue() {
-      const info = await this.$axios.get(this.$API_URL+"/queue/place", {
+      const info = await this.$axios.post(this.$API_URL+"/appointments/get", 
+        {
+          email: localStorage.getItem('email'),
+          queue: true
+        },
+
+        {
             headers: {'x-access-token': localStorage.getItem('jwt')}
         })
         .catch(e => {
@@ -154,13 +160,15 @@ export default {
 
         console.log(info);
 
-          //this.queueInfo = info.data;
     },
 
     async enterQueue() {
-      const info = await this.$axios.post(this.$API_URL+"/queue/enter",
+      this.isInQueue = true;
+
+      const info = await this.$axios.post(this.$API_URL+"/appointments/add",
             {
-              email: localStorage.getItem('email')
+              email: localStorage.getItem('email'),
+              queue: true
             },
 
             {
@@ -179,9 +187,10 @@ export default {
     },
 
     async leaveQueue() {
-      const info = await this.$axios.post(this.$API_URL+"/queue/exit",
+      const info = await this.$axios.post(this.$API_URL+"/appointments/delete",
             {
-              email: localStorage.getItem('email')
+              email: localStorage.getItem('email'),
+              queue: true
             },
 
             {

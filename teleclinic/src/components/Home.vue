@@ -28,7 +28,7 @@ export default {
         }, {headers: {'x-access-token': localStorage.getItem('jwt')}}) 
         .then(r => {
           console.log(r);
-          this.$router.push('doctor_queue');
+          this.$router.push('/doctor_queue');
         })          
         .catch(e => {
             console.log(e);

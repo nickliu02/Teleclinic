@@ -45,7 +45,7 @@ function createMeeting(body,start_time,doctor_email,email){
         // data.start_url
         client.query(
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
-            [data.start,data.finish,data.timed,data.color,data.doctor_email,data.details,data.name,data.start_url,data.join_url,pwd,email]
+            [Math.floor(data.start/1000),Math.floor(data.finish/1000),data.timed,data.color,data.doctor_email,data.details,data.name,data.start_url,data.join_url,pwd,email]
         )
         send_email(email,data.join_url,data.start)
 
@@ -86,7 +86,7 @@ const isDoctor = (email) => client.query(
     .catch(e => e);
 
 const getDoctor = (email) => client.query(
-    'SELECT * FROM appointments WHERE doctor_email = $1 ORDER BY start,finish',
+    'SELECT a.appointment_id, a.start, a.finish, a.timed, a.color, a.doctor_email, a.details, a.name, a.start_url, a.join_url, a.password, a.email, u.first_name, u.last_name FROM appointments a JOIN users u ON a.email = u.email WHERE a.doctor_email = $1 ORDER BY a.start,a.finish',
     [email]
 )
     .then(res => res.rows)

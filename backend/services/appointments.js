@@ -13,7 +13,10 @@ function make_password(length) {
 function createMeeting(body,start_time,doctor_email,email){
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
-    console.log("Date",new Date(start_time).toISOString().split(".")[0]+"Z");
+    var date = new Date(start_time);
+    let iso = date.toISOString();
+    console.log(iso);
+
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",

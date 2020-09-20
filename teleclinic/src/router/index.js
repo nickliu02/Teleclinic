@@ -85,7 +85,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
     else{
-      next({name: 'Queue'})
+      next({name: 'Appointments'})
     }
   }
   

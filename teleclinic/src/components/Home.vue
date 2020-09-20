@@ -35,6 +35,7 @@ export default {
         })
       }
       else {
+        console.log("hi")
         this.$router.push('/appointments');
       }
         

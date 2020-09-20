@@ -162,7 +162,7 @@ export default {
                         localStorage.setItem('email', form.email) 
                         if (localStorage.getItem('jwt') !== null){
                             
-                            this.$router.push('Home')
+                            this.$router.push('/')
                         
                         }
                     }

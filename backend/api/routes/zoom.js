@@ -11,8 +11,9 @@ zoomRouter.post('/create',checkAuth,async (req,res)=>{
     res.send(200);
 });
 
-zoomRouter.post('/python',async (req,res) => {
+zoomRouter.get('/python',async (req,res) => {
     tokenRefresher();
+    console.log("refreshed")
     res.send(200);
 })
 

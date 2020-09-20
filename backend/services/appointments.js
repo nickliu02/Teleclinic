@@ -95,7 +95,7 @@ const getPatient = (email) => client.query(
     'SELECT * FROM appointments WHERE email = $1 ORDER BY start,finish',
     [email]
 )
-    .then(res => res)
+    .then(res => res.rows)
     .catch(e => e);
 
 module.exports = {

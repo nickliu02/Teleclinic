@@ -17,7 +17,7 @@ const login = (email,password) => client.query(
     'SELECT * FROM users where email = $1 AND password = $2',
     [email,password]
 )
-    .then(res => generateToken(res.rows[0].username))
+    .then(res => generateToken(res.rows[0].email))
     .catch(e => e);
 
 const generateToken = (email) => jwt.sign(

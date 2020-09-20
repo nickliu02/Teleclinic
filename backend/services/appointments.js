@@ -109,7 +109,7 @@ const deleteAppointment = (appointment_id) => client.query(
     'DELETE FROM appointments WHERE appointment_id = $1',
     [appointment_id]
 )
-    .then(res)
+    .then()
     .catch(e => e);
 
 const getTimes = () => client.query(

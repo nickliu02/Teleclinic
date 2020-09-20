@@ -99,10 +99,10 @@ const getDoctor = (email) => client.query(
     .catch(e => e);
 
 const getPatient = (email) => client.query(
-    'SELECT * FROM queue WHERE email = $1 ORDER BY start,finish',
+    'SELECT s.* FROM (SELECT t.* ROW_NUMBER() OVER(ORDER BY t.start) AS position FROM TABLE queue) s WHERE s.email = $1',
     [email]
 )
-    .then(res => res.rows)
+    .then(res => res.rows[0])
     .catch(e => e);
 
 const deleteAppointment = (appointment_id) => client.query(

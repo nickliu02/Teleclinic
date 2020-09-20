@@ -24,6 +24,11 @@ queueRouter.get('/get',checkAuth,async (req,res)=>{
         res.send(infos);
     }
 });
+
+
+
+
+
 queueRouter.post('/delete',checkAuth,async (req,res)=>{
     const {appointment_id} = req.body;
     await deleteAppointment(appointment_id);

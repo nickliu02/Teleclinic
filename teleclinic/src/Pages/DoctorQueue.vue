@@ -121,16 +121,18 @@
                 >
                     back
                 </v-btn>
-
-                <v-btn
-                    color="green darken-1"
-                    text
-                    align="right"
-                    @click="openZoom()"
-                    
-                >
-                  start
-              </v-btn>
+                
+                <a v-bind:href="this.modalInfo.join_url" style="text-decoration:none">
+                    <v-btn
+                        color="green darken-1"
+                        text
+                        align="right"
+                        @click="openZoom()"
+                        
+                    >
+                    start
+                </v-btn>
+              </a>
             </v-card-actions>
             
               
@@ -279,9 +281,6 @@ export default {
                 console.log(r)
             })
             .catch(e => console.log(e))
-            
-
-            window.location = this.modalInfo.join_url;
         }
     },
 

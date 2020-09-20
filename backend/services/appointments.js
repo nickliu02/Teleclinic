@@ -11,17 +11,18 @@ function make_password(length) {
     }
     return result;
 }
-function createMeeting(body,start_time,doctor_email,email){
+async function createMeeting(body,start_time,doctor_email,email){
     console.log("sstart",start_time);
     console.log(typeof start_time);
-    start_time = long.fromString(start_time);
-    const token = retrieve_zoom_auth(doctor_email);
+    start_time = parseInt(start_time)*1000;
+    console.log(start_time);
+    const token = await retrieve_zoom_auth(doctor_email);
+    console.log("token",token);
     const pwd=make_password(6);
     var date = new Date(start_time);
     console.log("date",date);
-    let iso = date.toISOString();
+    let iso = date.toISOString().split('.')[0]+"Z";
     console.log(iso);
-
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",
@@ -31,7 +32,7 @@ function createMeeting(body,start_time,doctor_email,email){
         },
         json:{
             topic: "appointment",
-            start_time: new Date(start_time).toISOString().split(".")[0]+"Z",
+            start_time: iso,
             duration: 30,
             timezone: "UTC",
             password: pwd,

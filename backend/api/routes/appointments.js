@@ -2,7 +2,7 @@ const express = require('express');
 const checkAuth = require('./middleware/check-auth');
 const appointmentRouter = express.Router();
 
-const {createMeeting,isDoctor,getDoctor,getPatient} = require('../../services/appointments');
+const {createMeeting,isDoctor,getDoctor,getPatient,deleteAppointment} = require('../../services/appointments');
 appointmentRouter.post('/add',checkAuth,async (req,res)=>{
     const {start_time,doctor_email} =req.body;
     createMeeting(req.body, start_time,doctor_email,req.userData);
@@ -12,9 +12,10 @@ appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     //Check if it's doctor. If it's doctor, do where statement
     const value = await isDoctor(req.userData);
     console.log(value, "this is the doctor truth value");
-    if (value.exists == true){
+    if (value == true){
         //Do doctor
         const infos = await getDoctor(req.userData);
+        console.log(infos);
         res.send(infos);
     }
     else{
@@ -24,7 +25,9 @@ appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     }
 });
 appointmentRouter.post('/delete',checkAuth,async (req,res)=>{
-
+    const {appointment_id} = req.body;
+    await deleteAppointment(appointment_id);
+    res.status(200);
 
 
 });

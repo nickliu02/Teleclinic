@@ -13,6 +13,7 @@ function make_password(length) {
 function createMeeting(body,start_time,doctor_email,email){
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
+    console.log(new Date(start_time).toISOString().split(".")[0]+"Z");
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",
@@ -85,7 +86,7 @@ const isDoctor = (email) => client.query(
     .catch(e => e);
 
 const getDoctor = (email) => client.query(
-    'SELECT * FROM appointments WHERE doctor_email = $1 ORDER BY start,finish',
+    'SELECT a.appointment_id, a.start, a.finish, a.timed, a.color, a.doctor_email, a.details, a.name, a.start_url, a.join_url, a.password, a.email, u.first_name, u.last_name FROM appointments a JOIN users u ON a.email = u.email WHERE a.doctor_email = $1 ORDER BY a.start,a.finish',
     [email]
 )
     .then(res => res.rows)
@@ -98,9 +99,18 @@ const getPatient = (email) => client.query(
     .then(res => res.rows)
     .catch(e => e);
 
+const deleteAppointment = (appointment_id) => client.query(
+    'DELETE FROM appointments WHERE appointment_id = $1',
+    [appointment_id]
+)
+    .then(res)
+    .catch(e => e);
+
+
 module.exports = {
     createMeeting:createMeeting,
     isDoctor:isDoctor,
     getDoctor:getDoctor,
-    getPatient:getPatient
+    getPatient:getPatient,
+    deleteAppointment:deleteAppointment
 }

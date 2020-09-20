@@ -13,7 +13,7 @@ function make_password(length) {
 function createMeeting(body,start_time,doctor_email,email){
     console.log("sstart",start_time);
     console.log(typeof start_time);
-    start_time = 160057560000;
+    start_time = Integer.parseInt(start_time);
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
     var date = new Date(start_time);

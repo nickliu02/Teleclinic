@@ -6,7 +6,9 @@ const {createMeeting,isDoctor,getDoctor,getPatient,deleteAppointment,getTimes} =
 appointmentRouter.post('/add',checkAuth,async (req,res)=>{
     const {start,doctor_email} =req.body;
     await createMeeting(req.body, start,doctor_email,req.userData);
-    res.status(200);
+    res.status(200).json({
+        "fd":"fd"
+    });
 });
 appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     //Check if it's doctor. If it's doctor, do where statement
@@ -25,7 +27,9 @@ appointmentRouter.get('/get',checkAuth,async (req,res)=>{
 appointmentRouter.post('/delete',checkAuth,async (req,res)=>{
     const {appointment_id} = req.body;
     await deleteAppointment(appointment_id);
-    res.status(200);
+    res.status(200).json({
+        "poop":"sdf"
+    });
 
 
 });

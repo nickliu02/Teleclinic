@@ -49,6 +49,7 @@ async function createMeeting(body,start_time,doctor_email,email){
 
     };
     request(meetOptions,function(error,response,body){
+        console.log(body);
         let data = JSON.parse(body);
 
         // data.start_url

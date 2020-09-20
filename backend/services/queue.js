@@ -44,7 +44,7 @@ async function createMeeting(lmao,start_time,doctor_email,email){
     };
     request(meetOptions,function(error,response,body){
         let data = body;
-
+        console.log(body);
 
         // data.start_url
         client.query(

@@ -1,9 +1,9 @@
 <template>
     <v-app :style="{background: '#eee'}">
-      <v-container class="mx-auto">
+      <v-container class="mx-auto my-auto">
         
           
-            <v-card width="700" class="mx-auto">
+            <v-card width="400" class="mx-auto">
               <v-card-title class="black--text">
                 <h2 id="welcome" style="font-weight: normal">
                   Personal Information
@@ -22,87 +22,16 @@
 
               <v-divider></v-divider>
 
-              <v-row
-                justify="center"
-                class="ma-0 pa-0"
-              >
               
-                <v-col
-                  v-for="n in 4"
-                  :key="n"
-                >
-                
-                  <div v-if="n===1" style="color: #666">
-                    <h4 style="font-weight: normal; margin-left: 60px">Last name</h4>
-                  </div>
-
-                  <div v-if="n===2">
-                    <p>{{ last_name }}</p>
-                  </div>
-
-                  <div v-if="n===3" style="color: #666">
-                    <h4 style="font-weight: normal; margin-left: 40px">First name</h4>
-                  </div>
-
-                  <div v-if="n===4">
-                    <p style="margin-right: 20px">{{ first_name }}</p>
-                  </div>
-                  
-                  
-                </v-col>
-              </v-row>
-
-              <v-row
-                justify="center"
-                p="0"
-                class="ma-0 pa-0"
-              >
+              <ul style="list-style-type: none; font-size: 18px; padding: 20px">
+                <li><b>First name:</b> {{ info.first_name }}</li>
+                <li><b>Last name:</b>  {{ info.last_name }}</li>
+                <li><b>Email:</b>  {{ info.email }}</li>
+                <li><b>Phone number:</b>  {{ info.phone_number }}</li>
+                <li><b>Health card number:</b>  {{ info.health_card_number }}</li>
+              </ul>
               
-                <v-col
-                  v-for="n in 4"
-                  :key="n"
                 
-                >
-                  <div v-if="n===1" style="color: #666">
-                    <h4 style="font-weight: normal; margin-left: 60px">Email</h4>
-                  </div>
-
-                  <div v-if="n===2">
-                    <p>{{ email }}</p>
-                  </div>
-
-                  <div v-if="n===3" style="color: #666">
-                    <h4 style="font-weight: normal; margin-left: 40px">Phone number</h4>
-                  </div>
-
-                  <div v-if="n===4">
-                    <p style="margin-right: 20px">{{ phone_number }}</p>
-                  </div>
-                  
-                </v-col>
-              </v-row>
-
-              <v-row
-                justify="center"
-                p="0"
-                class="ma-0"
-              >
-              
-                <v-col
-                  v-for="n in 2"
-                  :key="n"
-                
-                >
-                  <div v-if="n===1" style="color: #666">
-                    <h4 style="font-weight: normal; margin-left: 60px">Health Card Number</h4>
-                  </div>
-
-                  <div v-if="n===2">
-                    <p style="font-weight: normal; margin-right: 340px">{{ health_card_number }}</p>
-                  </div>
-                  
-                </v-col>
-              </v-row>
 
     
             </v-card>
@@ -213,25 +142,17 @@ export default {
   },
 
   data: () => ({
-    
-    last_name: "Liu",
-    first_name: "Nick",
-    email: "nickliu02@gmail.com",
-    phone_number: "(403) 680-0666",
-    health_card_number: "1234567890",
-
-    
+    info: {
+      last_name: "Liu",
+      first_name: "Nick",
+      email: "nickliu02@gmail.com",
+      phone_number: "(403) 680-0666",
+      health_card_number: "1234567890"
+    },
 
     mdiPencil: mdiPencil,
 
     isEditModalOpen: false,
-    modalInfo: { 
-      last_name: "",
-      first_name: "",
-      email: "",
-      phone_number: "",
-      health_card_number: "", 
-    },
 
     form: {
       email : "",
@@ -257,27 +178,44 @@ export default {
         first_name: this.first_name,
         email: this.email,
         phone_number: this.phone_number,
-        health_card_number: "1234567890"
+        health_card_number: this.health_card_number
       };
       this.form = this.modalInfo;
     },
+
+    async getUserInfo() {
+      const info = await this.$axios.get(this.$API_URL+"/info/profile", {
+        headers: {'x-access-token': localStorage.getItem('jwt')}
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+      this.info = info.data;
+      }
   },
 
   onUpdate(e){
-            e.preventDefault()
-            console.log("update info")
-            const form = this.form;
-            if (this.$refs.form.validate()) {
-                this.$axios.post(this.$API_URL+"/auth/update_info", {
-                        ...form
-                    })
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(e => console.log(e))
+      e.preventDefault()
+      console.log("update info")
+      const form = this.form;
+      if (this.$refs.form.validate()) {
+          this.$axios.post(this.$API_URL+"/auth/update_info", {
+                  ...form
+              })
+          .then(response => {
+              console.log(response);
+          })
+          .catch(e => console.log(e))
 
-            }
-             
-        }
+      }
+        
+  },
+
+
+
+  mounted() {
+    this.getUserInfo();
+  }
 };
 </script>

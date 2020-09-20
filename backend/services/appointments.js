@@ -57,7 +57,7 @@ async function createMeeting(lmao,start_time,doctor_email,email){
         // data.start_url
         client.query(
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
-            [Math.floor(parseInt(lmao.start)),Math.floor(parseInt(lmao.finish)),lmao.timed,lmao.color,lmao.doctor_email,lmao.details,lmao.name,data.start_url,data.join_url,pwd,lmao.email]
+            [Math.floor(parseInt(lmao.start)),Math.floor(parseInt(lmao.finish)),lmao.timed,lmao.color,lmao.doctor_email,lmao.details,lmao.name,data.start_url,data.join_url,pwd,email]
         )
         .then(res => res)
         .catch(e => console.log(e));

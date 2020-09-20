@@ -15,23 +15,25 @@ export default {
   },
 
   mounted() {
-        let code = this.$route.query.code;
-        console.log(this.$route.query.code)
+      let code = this.$route.query.code;
+      console.log(this.$route.query.code);
+      
 
-        if (code) {
-          console.log("sending code")
-          this.$axios.post(this.$API_URL+"/zoom/create", {
-          code: code,
-          email: "santaclaus@gmail.com"
-          }, {headers: {'x-access-token': localStorage.getItem('jwt')}}) 
-          .then(r => {
-            console.log(r);
-            this.$router.push('doctor_queue');
-          })          
-          .catch(e => {
-              console.log(e);
-          })
-        }
+      if (code && !localStorage.getItem('code_sent')) {
+        localStorage.setItem("code_sent", "true");
+        console.log("sending code")
+        this.$axios.post(this.$API_URL+"/zoom/create", {
+        code: code,
+        email: "santaclaus@gmail.com"
+        }, {headers: {'x-access-token': localStorage.getItem('jwt')}}) 
+        .then(r => {
+          console.log(r);
+          this.$router.push('/doctor_queue');
+        })          
+        .catch(e => {
+            console.log(e);
+        })
+      }
         
         
         

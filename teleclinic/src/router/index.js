@@ -50,7 +50,7 @@ let router = new Router({
 
       {
         path: "/doctor_queue", name:"DoctorQueue", component: DoctorQueue, meta:{
-          doctor:true
+          doctor:true, auth:true
         }
       },
 

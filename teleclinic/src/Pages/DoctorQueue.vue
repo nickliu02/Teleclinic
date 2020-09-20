@@ -186,25 +186,11 @@ export default {
     data() {
         return {
             appointments: [
-                {
-                    id: "25",   
-                    name: "Doctor’s Appointment", 
-                    details: "Purpose of appointment", 
-                    start: Date.now(),
-                    end: Date.now() + 100000,
-                    color: "red",
-                    zoom_link: "https://www.google.com",
-                    first_name: "ayy",
-                    last_name: "lmao",
-                },
+            
             ],
 
             walk_ins: [
-                {
-                    first_name: "lol",
-                    last_name: "xd",
-                    email: "lol@lol.com"
-                },
+                
             ],
 
             modalInfo: {},
@@ -250,14 +236,24 @@ export default {
             }
             return dat+'/'+mon+"/"+d.getFullYear()
         },
+
+        async getAppointments() {
+            const info = await this.$axios.get(this.$API_URL+"/appointments/get", {
+                headers: {'x-access-token': localStorage.getItem('jwt')}
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+            console.log(info);
+
+            this.appointments = info.data;
+        },
         
     },
 
     mounted() {
-        for (let i = 0; i < 30; i++) {
-            this.appointments.push(this.appointments[0]);
-            this.walk_ins.push(this.walk_ins[0]);
-        }
+        this.getAppointments();
     },
 
     components: {

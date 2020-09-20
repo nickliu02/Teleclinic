@@ -13,13 +13,13 @@ const update = (email, first_name,last_name, phone_number, health_card_number) =
     .then(res => true)
     .catch(e => e);
 
-    const profile = (email) => client.query(
-        'SELECT email,first_name,last_name,phone_number,health_card_number FROM users WHERE email = $1',
-        [email]
-    )
-        .then(res => res.rows[0])
-        .catch(e => e);
-    
+const profile = (email) => client.query(
+    'SELECT email,first_name,last_name,phone_number,health_card_number FROM users WHERE email = $1',
+    [email]
+)
+    .then(res => res.rows[0])
+    .catch(e => e);
+
 
 module.exports = {
     update:update,

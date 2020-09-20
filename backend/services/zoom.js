@@ -4,7 +4,7 @@ const client = require('./database').client;
 const request = require("request");
 
 function assignCode(code,email) {
-    console.log(code);
+    console.log("code",code);
     var authOptions = {
 
         method: 'POST',
@@ -12,7 +12,7 @@ function assignCode(code,email) {
         qs: {
             grant_type: 'authorization_code',
             code: code,
-            redirect_uri: 'http://134.209.168.108:3000/zoom/create/'
+            redirect_uri: 'http://teleclinic.netlify.app/'
         },
         headers: {
             /**The credential below is a sample base64 encoded credential. Replace it with "Authorization: 'Basic ' + Buffer.from(your_app_client_id + ':' + your_app_client_secret).toString('base64')"
@@ -22,9 +22,9 @@ function assignCode(code,email) {
 
     };
     request(authOptions,function(error,response,body){
-
+        console.log("body", body);
         let token = JSON.parse(body).access_token;
-        console.log(token);
+        console.log("token",token);
         client.query(
             'UPDATE doctors SET zoomauth = $1 WHERE email = $2',
             [token,email]

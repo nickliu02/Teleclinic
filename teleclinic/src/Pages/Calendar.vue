@@ -3,7 +3,7 @@
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-          <v-btn color="primary" class="mr-4" @click="setDialogTrue()" dark>
+          <v-btn v-if="showing()" color="primary" class="mr-4" @click="setDialogTrue()" dark>
             Add Appointment
           </v-btn>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
@@ -187,6 +187,9 @@
     },
 
     methods: {
+      showing(){
+        return !(localStorage.getItem('isDoctor') == true);
+      },
 
       async getAppointments(){//individual appointments onlylet snapshot =
         // let snapshot = awuait db.collection('calEvent').get()

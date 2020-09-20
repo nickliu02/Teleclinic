@@ -145,7 +145,7 @@ export default {
     },
 
     async getPlaceInQueue() {
-      const info = await this.$axios.post(this.$API_URL+"/appointments/get", 
+      const info = await this.$axios.post(this.$API_URL+"/queue/get", 
         {
           email: localStorage.getItem('email'),
           queue: true
@@ -165,7 +165,7 @@ export default {
     async enterQueue() {
       this.isInQueue = true;
 
-      const info = await this.$axios.post(this.$API_URL+"/appointments/add",
+      const info = await this.$axios.post(this.$API_URL+"/queue/add",
             {
               email: localStorage.getItem('email'),
               queue: true
@@ -187,7 +187,7 @@ export default {
     },
 
     async leaveQueue() {
-      const info = await this.$axios.post(this.$API_URL+"/appointments/delete",
+      const info = await this.$axios.post(this.$API_URL+"/queue/delete",
             {
               email: localStorage.getItem('email'),
               queue: true

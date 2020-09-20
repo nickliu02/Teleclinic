@@ -9,6 +9,7 @@ const app = express();
 const authRoutes = require('./api/routes/auth');
 const zoomRoutes = require('./api/routes/zoom');
 const appointmentsRoutes = require('./api/routes/appointments');
+const queueRoutes = require('./api/routes/queue');
 const infoRoutes = require('./api/routes/info');
 
 app.use(morgan('dev'));
@@ -23,6 +24,7 @@ app.use('/auth',authRoutes);
 app.use('/zoom',zoomRoutes);
 app.use('/appointments',appointmentsRoutes);
 app.use('/info',infoRoutes);
+app.use('/queue',queueRoutes);
 
 
 //Errors

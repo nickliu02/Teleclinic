@@ -12,17 +12,11 @@ function make_password(length) {
     return result;
 }
 async function createMeeting(lmao,start_time,doctor_email,email){
-    console.log("sstart",start_time);
-    console.log(typeof start_time);
     start_time = parseInt(start_time)*1000;
-    console.log(start_time);
     const token = await retrieve_zoom_auth(doctor_email);
-    console.log("token",token);
     const pwd=make_password(6);
     var date = new Date(start_time);
-    console.log("date",date);
     let iso = date.toISOString().split('.')[0]+"Z";
-    console.log(iso);
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",
@@ -49,8 +43,6 @@ async function createMeeting(lmao,start_time,doctor_email,email){
 
     };
     request(meetOptions,function(error,response,body){
-        console.log(body);
-        console.log(error);
         let data = body;
 
 
@@ -59,7 +51,7 @@ async function createMeeting(lmao,start_time,doctor_email,email){
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
             [Math.floor(parseInt(lmao.start)),Math.floor(parseInt(lmao.finish)),lmao.timed,lmao.color,lmao.doctor_email,lmao.details,lmao.name,data.start_url,data.join_url,pwd,email]
         )
-        .then(res => {})
+        .then()
         .catch(e => console.log(e));
         send_email(email,data.join_url,data.start)
 

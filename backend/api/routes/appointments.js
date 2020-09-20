@@ -15,6 +15,7 @@ appointmentRouter.get('/get',checkAuth,async (req,res)=>{
     if (value.exists == true){
         //Do doctor
         const infos = await getDoctor(req.userData);
+        console.log(infos);
         res.send(infos);
     }
     else{

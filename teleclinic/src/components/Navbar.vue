@@ -82,6 +82,7 @@ export default {
   methods: {
       logOut() {
           localStorage.removeItem('jwt');
+          localStorage.removeItem('code_sent')
           this.$router.push('Login');
       }
   }

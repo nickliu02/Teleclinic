@@ -31,26 +31,26 @@ async function createMeeting(body,start_time,doctor_email,email){
             "Content-Type":"application/json"
         },
         json:{
-            topic: "appointment",
+        topic: "appointment",
             start_time: iso,
             duration: 30,
             timezone: "UTC",
             password: pwd,
             agenda: "Checkup",
             settings: {
-                host_video: true,
+            host_video: true,
                 participant_video: true,
                 join_before_host: true,
                 mute_upon_entry: true,
                 enforce_login: false,
                 registrants_email_notification: true
-            }
         }
+    }
 
     };
     request(meetOptions,function(error,response,body){
         console.log(body);
-        let data = JSON.parse(body);
+        let data = body;
 
         // data.start_url
         client.query(

@@ -188,7 +188,8 @@
 
     methods: {
       showing(){
-        return !(localStorage.getItem('isDoctor') == true);
+        console.log(!(localStorage.getItem('isDoctor')))
+        return !(localStorage.getItem('isDoctor'));
       },
 
       async getAppointments(){//individual appointments onlylet snapshot =

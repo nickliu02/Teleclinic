@@ -7,7 +7,7 @@ const checkAuth = require('./middleware/check-auth');
 //associates auth token with email
 zoomRouter.post('/create',checkAuth,async (req,res)=>{
     const code =req.body.code;
-    console.log("userData",req.userData);
+    console.log("userData",req.userData.email);
     assignCode(code,req.userData);
     res.send(200);
 });

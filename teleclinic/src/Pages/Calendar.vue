@@ -156,7 +156,7 @@
         finish: null,
         timed: true,
         color: "primary",
-        doctor_email: "santaclaus@gmail.com"
+        doctor_email: "kathrikai30201094@gmail.com"
       },
       today: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -225,11 +225,10 @@
           let reason = this.form.reason
 
 
-          this.newAppointment.start = startTS
-          this.newAppointment.finish = endTS
+          this.newAppointment.start = Math.floor(startTS/1000);
+          this.newAppointment.finish = Math.floor(endTS/1000);
           this.newAppointment.name = name
           this.newAppointment.details = reason
-
 
           const newAppointment = this.newAppointment
           await this.$axios.post(this.$API_URL+"/appointments/add",

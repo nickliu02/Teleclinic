@@ -117,7 +117,7 @@ const deleteAppointment = (appointment_id) => client.query(
     .catch(e => e);
 
 const getTimes = () => client.query(
-    'SELECT start FROM appointments',
+    'SELECT start FROM appointments ORDER BY start',
     []
 )
     .then(res => res.rows)

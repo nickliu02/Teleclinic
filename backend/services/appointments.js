@@ -11,9 +11,11 @@ function make_password(length) {
     return result;
 }
 function createMeeting(body,start_time,doctor_email,email){
+    console.log("sstart",start_time);
     const token = retrieve_zoom_auth(doctor_email);
     const pwd=make_password(6);
     var date = new Date(start_time);
+    console.log("date",date);
     let iso = date.toISOString();
     console.log(iso);
 

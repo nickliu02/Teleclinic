@@ -59,6 +59,8 @@ async function createMeeting(body,start_time,doctor_email,email){
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
             [Math.floor(parseInt(data.start)),Math.floor(parseInt(data.finish)),data.timed,data.color,data.doctor_email,data.details,data.name,data.start_url,data.join_url,pwd,email]
         )
+        .then(res => res)
+        .catch(e => console.log(e));
         send_email(email,data.join_url,data.start)
 
 

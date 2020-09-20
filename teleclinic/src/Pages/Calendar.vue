@@ -156,7 +156,7 @@
         finish: null,
         timed: true,
         color: "primary",
-        doctor_email: "kathrikai30201094@gmail.com"
+        doctor_email: "kathrikai30201094@gmail.com",
       },
       today: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -195,7 +195,6 @@
           headers: {"x-access-token":token}}).catch(e => console.log(e))
 
         const eveT = [];
-
         dat.data.forEach(doc=>{
           let appData = doc
           let event = {id: appData.appointment_id,
@@ -207,7 +206,6 @@
              color: appData.color}
           eveT.push(event)
         })
-
         this.events = eveT
 
 
@@ -237,7 +235,8 @@
               }, {
                 headers: {"x-access-token":token}})
           .catch(e => console.log(e))
-          this.getAppointments()
+          this.$router.go(0);
+
           //send above variables + true
         }
       },
@@ -247,15 +246,15 @@
         const myF = this.myForm;
         let token = localStorage.getItem("jwt")
 
+        this.selectedOpen =  false;
         await this.$axios.post(this.$API_URL+"/appointments/delete",
           {
                 ...myF
             }, {
               headers: {"x-access-token":token}})
         .catch(e => console.log(e))
+        this.$router.go(0);
 
-        this.selectedOpen =  false;
-        this.getAppointments();
       },
       async getTimes(date){
         let token = localStorage.getItem("jwt")
@@ -288,7 +287,7 @@
         if(m=="PM"&& time.split(":")[0]!="12"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
         if(m=="AM"&&time=="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString() }
         let timeS = new Date(Date.UTC(dL[0],dL[1]-1,dL[2],tL[0],tL[1]))
-        return timeS.getTime().toString()
+        return (timeS.getTime()+3600000*4).toString()
       },
       toToDfromTimestamp(ts){
         let d = new Date(ts)

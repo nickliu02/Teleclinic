@@ -50,7 +50,9 @@ async function createMeeting(body,start_time,doctor_email,email){
     };
     request(meetOptions,function(error,response,body){
         console.log(body);
+        console.log(error);
         let data = body;
+
 
         // data.start_url
         client.query(
@@ -122,7 +124,7 @@ const getTimes = () => client.query(
 )
     .then(res => res.rows)
     .catch(e => e);
-    
+
 
 module.exports = {
     createMeeting:createMeeting,

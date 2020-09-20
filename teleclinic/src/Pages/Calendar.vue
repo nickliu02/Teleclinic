@@ -178,18 +178,20 @@
       dialogDate: false,
       meetingST: []
     }),
+
     mounted () {
       this.$refs.calendar.checkChange()
-      this.meetingST = [this.toTimestamp("2020-09-19","9:00 AM")]
-      this.getAppointments()
+      this.meetingST = [this.toTimestamp("2020-09-19","9:00 PM")]
+      console.log(this.toTimestamp("2020-09-19","9:00 PM"))
+      //this.getAppointments()
     },
 
     methods: {
       async getAppointments(){//individual appointments onlylet snapshot =
         // let snapshot = awuait db.collection('calEvent').get()
-        let token = localStorage.getItem("token")
+        let token = localStorage.getItem("jwt")
         let data = await this.$axios.get(this.$API_URL+"/appointments/get",{
-          header: {token:token}}).catch(e => console.log(e))
+          headers: {"x-access-token":token}}).catch(e => console.log(e))
         let e = [];
         data.foreach(doc=>{
           let event = {id: "name",start: 1600534864379,end:1600535864379,details:"Corona Virus", name: "Doctor's Appointment", timed: true, color:"primary"}
@@ -215,7 +217,7 @@
 
           let startTS = this.toTimestamp(this.form.date, startT)
           let endTS = this.toTimestamp(this.form.date,endT)
-          let token = localStorage.getItem("token")
+          let token = localStorage.getItem("jwt")
           let name = "Doctor's Appointment"
           let reason = this.form.reason
 
@@ -225,13 +227,19 @@
           this.newAppointment.name = name
           this.newAppointment.details = reason
 
+          console.log(startTS)
+          console.log(endTS)
+          console.log(name)
+          console.log(reason)
+
+
 
           const newAppointment = this.newAppointment
-          this.$axios.post(this.$API_URL+"/appointments/add",{
-            header: {token:token}},
+          await this.$axios.post(this.$API_URL+"/appointments/add",
             {
                   ...newAppointment
-              })
+              }, {
+                headers: {"x-access-token":token}})
           .catch(e => console.log(e))
           this.getAppointments()
           //send above variables + true
@@ -248,9 +256,11 @@
         let m = timemL[1]
         let dL = date.split("-")
         let tL = time.split(":")
-        if(m=="PM"&& time!="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
+        console.log(m)
+        if(m=="PM"&& time.split(":")[0]!="12"){ tL[0] =  (parseInt(tL[0],10)+12).toString()}
         if(m=="AM"&&time=="12:00"){ tL[0] =  (parseInt(tL[0],10)+12).toString() }
-        let timeS = new Date(Date.UTC(dL[0],dL[1],dL[2],tL[0],tL[1]))
+        console.log(" "+dL[0]+" "+dL[1]+" "+dL[2]+" "+tL[0]+" "+tL[1])
+        let timeS = new Date(Date.UTC(dL[0],dL[1]-1,dL[2],tL[0],tL[1]))
         return timeS.getTime().toString()
       },
       toToDfromTimestamp(ts){
@@ -325,8 +335,13 @@
       updateAvailableTimes(dat){
         let aMeetings = []
         for(var i = 0;i<this.times.length-1;i+=1){
-          if(!this.meetingST.includes(this.toTimestamp(dat,this.times[i]))){
+          let startT = this.toTimestamp(dat,this.times[i]);
+          console.log(this.times[i]);
+          console.log(Date.now());
+          if(!this.meetingST.includes(startT)){
+            if(Date.now()<=startT){
               aMeetings.push(this.times[i] + " - "+this.times[i+1])
+            }
           }
         }
         this.availableT=aMeetings

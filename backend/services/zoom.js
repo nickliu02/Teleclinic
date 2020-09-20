@@ -14,7 +14,7 @@ let tokenRefresher = setInterval(function () {
         .catch(e => e);
 
 
-}, 60*1000*30);
+}, 60*1000);
 function assignCode(code,email) {
     console.log("code",code);
     var authOptions = {

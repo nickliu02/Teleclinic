@@ -88,14 +88,14 @@ const getDoctor = (email) => client.query(
     'SELECT * FROM appointments WHERE doctor_email = $1 ORDER BY start,finish',
     [email]
 )
-    .then(res => res.rows[0])
+    .then(res => res.rows)
     .catch(e => e);
 
 const getPatient = (email) => client.query(
-    'SELECT * FROM appointsments WHERE email = $1 ORDER BY start,finish',
+    'SELECT * FROM appointments WHERE email = $1 ORDER BY start,finish',
     [email]
 )
-    .then(res => res.rows[0])
+    .then(res => res.rows)
     .catch(e => e);
 
 module.exports = {

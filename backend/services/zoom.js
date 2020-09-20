@@ -22,7 +22,7 @@ function assignCode(code,email) {
 
     };
     request(authOptions,function(error,response,body){
-        console.log(error);
+        console.log(body);
         let token = JSON.parse(body).access_token;
         console.log("token",token);
         client.query(

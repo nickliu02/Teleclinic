@@ -126,6 +126,7 @@
                     color="green darken-1"
                     text
                     align="right"
+                    @click="openZoom()"
                     
                 >
                   start
@@ -200,7 +201,7 @@ export default {
     },
     methods: {
         toToDfromTimestamp(ts){
-            let d = new Date(ts)
+            let d = new Date(ts*1000)
             let dL = d.toTimeString().split(":")
             let hr = parseInt(dL[0],10)
             let curPeriod = "AM"
@@ -225,7 +226,7 @@ export default {
         },
 
         toDatefromTimestamp(ts){
-            let d = new Date(ts)
+            let d = new Date(ts*1000)
             let dat = ""+d.getDate()
             let mon = ""+(d.getMonth()+1)
             if (dat.length==1){
@@ -263,6 +264,24 @@ export default {
             this.appointments = info.data;
         },
         
+        async openZoom() {
+            let token = localStorage.getItem('jwt')
+
+            console.log(this.modalInfo)
+            
+
+            await this.$axios.post(this.$API_URL+"/appointments/delete",
+            {
+                    id: this.modalInfo.appointment_id
+                }, {
+                headers: {"x-access-token":token}})
+            .then(r=> {
+                console.log(r)
+            })
+            .catch(e => console.log(e))
+            }
+
+            //window.location = this.modalInfo.join_url;
     },
 
     mounted() {

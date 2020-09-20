@@ -1,11 +1,11 @@
 <template>
     <v-app>
         <v-navigation-drawer 
-        permanent
-        app
-        color="primary"
-        dark
-        expand-on-hover
+            permanent
+            app
+            color="primary"
+            dark
+            expand-on-hover
         >
         
             <v-list-item two-line>
@@ -71,7 +71,7 @@ export default {
   data: () => ({
     items: [
       { title: "Appointments", icon: mdiCalendarMonthOutline, route: "/appointments" },
-      { title: "Queue", icon: mdiHumanQueue, route: localStorage.getItem('isDoctor') == true ? "/doctor_queue": "/queue" },
+      { title: "Queue", icon: mdiHumanQueue, route: localStorage.getItem('isDoctor') == 'true' ? "/doctor_queue": "/queue" },
       { title: "Personal Info", icon: mdiBookInformationVariant, route: "/personal_info" },
     ],
 

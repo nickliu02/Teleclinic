@@ -116,11 +116,19 @@ const deleteAppointment = (appointment_id) => client.query(
     .then(res)
     .catch(e => e);
 
+const getTimes = () => client.query(
+    'SELECT start FROM appointments',
+    []
+)
+    .then(res => res.rows)
+    .catch(e => e);
+    
 
 module.exports = {
     createMeeting:createMeeting,
     isDoctor:isDoctor,
     getDoctor:getDoctor,
     getPatient:getPatient,
-    deleteAppointment:deleteAppointment
+    deleteAppointment:deleteAppointment,
+    getTimes:getTimes
 }

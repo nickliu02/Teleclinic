@@ -2,7 +2,7 @@ const express = require('express');
 const checkAuth = require('./middleware/check-auth');
 const appointmentRouter = express.Router();
 
-const {createMeeting,isDoctor,getDoctor,getPatient,deleteAppointment} = require('../../services/appointments');
+const {createMeeting,isDoctor,getDoctor,getPatient,deleteAppointment,getTimes} = require('../../services/appointments');
 appointmentRouter.post('/add',checkAuth,async (req,res)=>{
     const {start,doctor_email} =req.body;
     console.log(doctor_email,"doctor")
@@ -31,6 +31,13 @@ appointmentRouter.post('/delete',checkAuth,async (req,res)=>{
     res.status(200);
 
 
+});
+
+appointmentRouter.get('/getTimes',checkAuth,async (req,res)=>{
+    const infos = await getTimes();
+    console.log(infos);
+    res.send(infos);
+    
 });
 
 module.exports=appointmentRouter;

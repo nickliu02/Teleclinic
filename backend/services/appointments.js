@@ -98,9 +98,18 @@ const getPatient = (email) => client.query(
     .then(res => res.rows)
     .catch(e => e);
 
+const deleteAppointment = (appointment_id) => client.query(
+    'DELETE FROM appointments WHERE appointment_id = $1',
+    [appointment_id]
+)
+    .then(res)
+    .catch(e => e);
+
+
 module.exports = {
     createMeeting:createMeeting,
     isDoctor:isDoctor,
     getDoctor:getDoctor,
-    getPatient:getPatient
+    getPatient:getPatient,
+    deleteAppointment:deleteAppointment
 }

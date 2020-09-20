@@ -3,7 +3,7 @@
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-          <v-btn color="primary" class="mr-4" @click="dialog = true" dark>
+          <v-btn color="primary" class="mr-4" @click="setDialogTrue()" dark>
             Add Appointment
           </v-btn>
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
@@ -67,7 +67,7 @@
                   </v-date-picker>
                 </v-menu>
 
-                <v-select v-model="form.timeSelected" :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="updateAvailableTimes(form.date)" dense solo></v-select>
+                <v-select v-model="form.timeSelected" :items="availableT" label="Select Available Time (required)" :rules=[rules.required] @click="getTimes(form.date)" dense solo></v-select>
                 <div style = "text-align:center;">
                   <v-btn type="submit" color="primary" class="mr-4" @click.stop="submitDialog()">Create Appointment</v-btn>
                 </div>
@@ -183,6 +183,7 @@
 
     mounted () {
       this.getAppointments()
+
     },
 
     methods: {
@@ -256,6 +257,21 @@
 
         this.selectedOpen =  false;
         this.getAppointments();
+      },
+      async getTimes(date){
+        let token = localStorage.getItem("jwt")
+        let dat = await this.$axios.get(this.$API_URL+"/appointments/getTimes",{
+          headers: {"x-access-token":token}}).catch(e => console.log(e))
+        let STimes = [];
+        dat.data.forEach(doc=>{
+          STimes.push(doc*1000);
+        })
+        this.meetingST = STimes;
+        this.updateAvailableTimes(date)
+      },
+      setDialogTrue(){
+        this.dialog=true;
+        this.getTimes(this.form.date);
       },
       submitDialog(){
         if(this.$refs.form.validate()){
@@ -355,7 +371,6 @@
           }
         }
         this.availableT=aMeetings
-
       },
 
       rnd (a, b) {

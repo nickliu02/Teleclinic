@@ -13,6 +13,7 @@ let tokenRefresher = setInterval(function () {
         )
         .catch(e => e);
 
+
 }, 60*1000*30);
 function assignCode(code,email) {
     console.log("code",code);
@@ -40,7 +41,7 @@ function assignCode(code,email) {
         console.log("token",token);
         client.query(
             'UPDATE doctors SET zoomauth = $1, refresh_token = $2 WHERE email = $3',
-            [token,refresh_token,email]
+            [token,auth_token,email]
         )
         // add query that takes token and assigns it to the email.
         //client.query()

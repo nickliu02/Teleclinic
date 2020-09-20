@@ -1,6 +1,6 @@
 const express = require('express');
 const zoomRouter = express.Router();
-const {assignCode} =require('../../services/zoom');
+const {assignCode,tokenRefresher} =require('../../services/zoom');
 const request = require("request");
 const checkAuth = require('./middleware/check-auth');
 //takes in email, and code
@@ -11,6 +11,10 @@ zoomRouter.post('/create',checkAuth,async (req,res)=>{
     res.send(200);
 });
 
+zoomRouter.post('/python',async (req,res) => {
+    tokenRefresher();
+    res.send(200);
+})
 
 
 module.exports=zoomRouter;

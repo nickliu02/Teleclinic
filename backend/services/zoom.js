@@ -4,7 +4,7 @@ const client = require('./database').client;
 const request = require("request");
 
 
-let tokenRefresher = setInterval(function () {
+const tokenRefresher = function () {
     client.query(
         'SELECT refresh_token FROM doctors WHERE email = $1',["kathrikai30201094@gmail.com"]
     
@@ -14,7 +14,7 @@ let tokenRefresher = setInterval(function () {
         .catch(e => e);
 
 
-}, 60*1000);
+};
 function assignCode(code,email) {
     console.log("code",code);
     var authOptions = {
@@ -82,5 +82,6 @@ function createRefreshToken(refreshToken,email){
 
 
 module.exports = {
-    assignCode: assignCode
+    assignCode: assignCode,
+    tokenRefresher:tokenRefresher
 }

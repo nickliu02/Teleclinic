@@ -249,6 +249,19 @@ export default {
 
             this.appointments = info.data;
         },
+
+        async getQueue() {
+            const info = await this.$axios.get(this.$API_URL+"/appointments/get", {
+                headers: {'x-access-token': localStorage.getItem('jwt')}
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+            console.log(info);
+
+            this.appointments = info.data;
+        },
         
     },
 

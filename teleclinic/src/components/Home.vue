@@ -23,8 +23,8 @@ export default {
         localStorage.setItem("code_sent", "true");
         console.log("sending code")
         this.$axios.post(this.$API_URL+"/zoom/create", {
-        code: code,
-        email: "santaclaus@gmail.com"
+          code: code,
+          email: localStorage.getItem("email")
         }, {headers: {'x-access-token': localStorage.getItem('jwt')}}) 
         .then(r => {
           console.log(r);

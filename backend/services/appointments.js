@@ -1,4 +1,5 @@
 const client = require('./database').client;
+const long = require('long');
 const {retrieve_zoom_auth} = require('./auth');
 const nodemailer = require('nodemailer');
 const request = require('request');
@@ -10,10 +11,18 @@ function make_password(length) {
     }
     return result;
 }
-function createMeeting(body,start_time,doctor_email,email){
-    const token = retrieve_zoom_auth(doctor_email);
+async function createMeeting(body,start_time,doctor_email,email){
+    console.log("sstart",start_time);
+    console.log(typeof start_time);
+    start_time = parseInt(start_time)*1000;
+    console.log(start_time);
+    const token = await retrieve_zoom_auth(doctor_email);
+    console.log("token",token);
     const pwd=make_password(6);
-    console.log("Date",new Date(start_time).toISOString().split(".")[0]+"Z");
+    var date = new Date(start_time);
+    console.log("date",date);
+    let iso = date.toISOString().split('.')[0]+"Z";
+    console.log(iso);
     const meetOptions = {
         method:"POST",
         url:"https://api.zoom.us/v2/users/me/meetings",
@@ -23,7 +32,7 @@ function createMeeting(body,start_time,doctor_email,email){
         },
         json:{
             topic: "appointment",
-            start_time: new Date(start_time).toISOString().split(".")[0]+"Z",
+            start_time: iso,
             duration: 30,
             timezone: "UTC",
             password: pwd,
@@ -45,7 +54,7 @@ function createMeeting(body,start_time,doctor_email,email){
         // data.start_url
         client.query(
             'INSERT INTO appointments (start, finish, timed, color, doctor_email, details, name, start_url, join_url,password,email) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
-            [Math.floor(data.start/1000),Math.floor(data.finish/1000),data.timed,data.color,data.doctor_email,data.details,data.name,data.start_url,data.join_url,pwd,email]
+            [Math.floor(parseInt(data.start)),Math.floor(parseInt(data.finish)),data.timed,data.color,data.doctor_email,data.details,data.name,data.start_url,data.join_url,pwd,email]
         )
         send_email(email,data.join_url,data.start)
 

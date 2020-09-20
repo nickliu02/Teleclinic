@@ -72,14 +72,6 @@ router.beforeEach((to, from, next) => {
       next()
     }
   }
-  else if(to.matched.some(record => record.meta.guest)){
-    if(localStorage.getItem('jwt') == null){
-      next()
-    }
-    else{
-      next({name: 'Queue'})
-    }
-  }
   else if(to.matched.some(record => record.meta.isDoctor)) {
     if(localStorage.getItem('jwt') == null){
       next()
@@ -88,6 +80,15 @@ router.beforeEach((to, from, next) => {
       next({name: 'Appointments'})
     }
   }
+  else if(to.matched.some(record => record.meta.guest)){
+    if(localStorage.getItem('jwt') == null){
+      next()
+    }
+    else{
+      next({name: 'Queue'})
+    }
+  }
+  
   else{
     next()
   }

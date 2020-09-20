@@ -4,8 +4,9 @@ const appointmentRouter = express.Router();
 
 const {createMeeting,isDoctor,getDoctor,getPatient,deleteAppointment} = require('../../services/appointments');
 appointmentRouter.post('/add',checkAuth,async (req,res)=>{
-    const {start_time,doctor_email} =req.body;
-    createMeeting(req.body, start_time,doctor_email,req.userData);
+    const {start,doctor_email} =req.body;
+    console.log(doctor_email,"doctor")
+    await createMeeting(req.body, start,doctor_email,req.userData);
     res.status(200);
 });
 appointmentRouter.get('/get',checkAuth,async (req,res)=>{

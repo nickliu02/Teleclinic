@@ -214,7 +214,6 @@
       },
       async addAppointment(){
         if(this.$refs.form.validate()){
-          console.log("HERE")
           let timeL = this.form.timeSelected.split(" - ")
           let startT = timeL[0]
           let endT = timeL[1]
@@ -263,8 +262,9 @@
         let dat = await this.$axios.get(this.$API_URL+"/appointments/getTimes",{
           headers: {"x-access-token":token}}).catch(e => console.log(e))
         let STimes = [];
+
         dat.data.forEach(doc=>{
-          STimes.push(doc*1000);
+          STimes.push((doc.start*1000).toString());
         })
         this.meetingST = STimes;
         this.updateAvailableTimes(date)
@@ -360,11 +360,12 @@
         }
       },
       updateAvailableTimes(dat){
+
         let aMeetings = []
         for(var i = 0;i<this.times.length-1;i+=1){
           let startT = this.toTimestamp(dat,this.times[i]);
 
-          if(!this.meetingST.includes(startT)){
+          if(!(this.meetingST.includes(startT))){
             if(Date.now()<=startT){
               aMeetings.push(this.times[i] + " - "+this.times[i+1])
             }

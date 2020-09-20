@@ -8,7 +8,7 @@ const checkAuth = require('./middleware/check-auth');
 zoomRouter.post('/create',checkAuth,async (req,res)=>{
     const code =req.body.code;
     console.log("userData",req.userData.email);
-    assignCode(code,req.userData);
+    assignCode(code,req.userData.email);
     res.send(200);
 });
 
